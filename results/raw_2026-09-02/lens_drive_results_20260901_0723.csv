@@ -1,0 +1,7 @@
+lens,mph,dist_m,avg_g,status,engagements,cfg,banner
+peak_g,60,,,TIMEOUT,1,vehicles/etk800/LSTMABS_peak_g.pc,LSTM_ABS: lens 'peak_g' loaded
+peak_g,60,,,TIMEOUT,1,vehicles/etk800/LSTMABS_peak_g.pc,LSTM_ABS: lens 'peak_g' loaded
+peak_g_norpm,60,163.5990,0.2238,OK,2,vehicles/etk800/LSTMABS_peak_g_norpm.pc,LSTM_ABS: lens 'peak_g_norpm' loaded
+peak_g_norpm,60,162.6313,0.2252,OK,2,vehicles/etk800/LSTMABS_peak_g_norpm.pc,LSTM_ABS: lens 'peak_g_norpm' loaded
+REFERENCE_dlaw,60,30.4291,1.2034,OK,0,vehicles/etk800/DynamicABS1.pc,Dynamic_ABS banner
+REFERENCE_dlaw,60,30.2181,1.2118,OK,0,vehicles/etk800/DynamicABS1.pc,Dynamic_ABS banner

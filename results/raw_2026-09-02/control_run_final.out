@@ -1,0 +1,35 @@
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+partConfig: vehicles/etk800/LSTMABS_baseline_stock800.pc
+hasABS: 0
+lens tag: baseline_stock800
+[LSTMABS_baseline_stock800] run 1/2 @ 60mph ...  {'runID': '1788341980-0001', 'avg_g': '1.0714', 'dist_m': '34.1768', 'status': 'OK', 'gear': 'D', 'rpm': '7482', 'dmg': '0'}
+[LSTMABS_baseline_stock800] run 2/2 @ 60mph ...  {'runID': '1788342013-0002', 'avg_g': '1.0582', 'dist_m': '34.6029', 'status': 'OK', 'gear': 'D', 'rpm': '7488', 'dmg': '0'}
+engagements: 2
+partConfig: vehicles/etk800/DynamicABS1.pc
+hasABS: 0
+lens tag: none
+[DynamicABS1] run 1/2 @ 60mph ...  {'runID': '1788342043-0001', 'avg_g': '1.2020', 'dist_m': '30.4630', 'status': 'OK', 'gear': 'D', 'rpm': '7468', 'dmg': '0'}
+[DynamicABS1] run 2/2 @ 60mph ...  {'runID': '1788342076-0002', 'avg_g': '1.2115', 'dist_m': '30.2257', 'status': 'OK', 'gear': 'D', 'rpm': '7424', 'dmg': '0'}
+engagements: 0
+222 trace/log lines -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\control_trace_final60_20260902_0238.log
+RESULT ('LSTMABS_baseline_stock800', {'runID': '1788341980-0001', 'avg_g': '1.0714', 'dist_m': '34.1768', 'status': 'OK', 'gear': 'D', 'rpm': '7482', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_stock800', {'runID': '1788342013-0002', 'avg_g': '1.0582', 'dist_m': '34.6029', 'status': 'OK', 'gear': 'D', 'rpm': '7488', 'dmg': '0'})
+RESULT ('DynamicABS1', {'runID': '1788342043-0001', 'avg_g': '1.2020', 'dist_m': '30.4630', 'status': 'OK', 'gear': 'D', 'rpm': '7468', 'dmg': '0'})
+RESULT ('DynamicABS1', {'runID': '1788342076-0002', 'avg_g': '1.2115', 'dist_m': '30.2257', 'status': 'OK', 'gear': 'D', 'rpm': '7424', 'dmg': '0'})
+launching BeamNG.drive on smallgrid ...
+channel up on level 'smallgrid' after ~10s
+partConfig: vehicles/etk800/LSTMABS_baseline_stock800.pc
+hasABS: 0
+lens tag: baseline_stock800
+[LSTMABS_baseline_stock800] run 1/1 @ 80mph ...  {'runID': '1788342119-0001', 'avg_g': '0.9869', 'dist_m': '66.0052', 'status': 'OK', 'gear': 'D', 'rpm': '6611', 'dmg': '0'}
+engagements: 1
+partConfig: vehicles/etk800/LSTMABS_avg_g_window_hg.pc
+hasABS: 0
+lens tag: avg_g_window_hg
+[LSTMABS_avg_g_window_hg] run 1/1 @ 80mph ...  {'runID': '1788342153-0001', 'avg_g': '1.0148', 'dist_m': '64.1868', 'status': 'OK', 'gear': 'D', 'rpm': '6596', 'dmg': '0'}
+engagements: 1
+297 trace/log lines -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\control_trace_final80_20260902_0241.log
+RESULT ('LSTMABS_baseline_stock800', {'runID': '1788342119-0001', 'avg_g': '0.9869', 'dist_m': '66.0052', 'status': 'OK', 'gear': 'D', 'rpm': '6611', 'dmg': '0'})
+RESULT ('LSTMABS_avg_g_window_hg', {'runID': '1788342153-0001', 'avg_g': '1.0148', 'dist_m': '64.1868', 'status': 'OK', 'gear': 'D', 'rpm': '6596', 'dmg': '0'})

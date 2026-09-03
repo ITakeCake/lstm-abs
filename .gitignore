@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.npz
+*.parquet
+.driveenv/
+Thumbs.db
+recorded_data_2khz_clean/
+recorded_data_2khz_clean_tel/
+mod/lstm_abs/lua/vehicle/controller/lstmabs_weights_*.lua
+*.BAK*
+configs/_parked*/

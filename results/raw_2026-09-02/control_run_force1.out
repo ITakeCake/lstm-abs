@@ -1,0 +1,10 @@
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+partConfig: vehicles/etk800/LSTMABS_baseline.pc
+hasABS: 0
+lens tag: baseline
+run 1/1 @ 60mph ...  {'runID': '1788340342-0001', 'avg_g': '1.0017', 'dist_m': '36.5572', 'status': 'OK', 'gear': 'D', 'rpm': '7416', 'dmg': '0'}
+engagements: 1
+60 trace/log lines -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\control_trace_force1_20260902_0211.log
+RESULT {'runID': '1788340342-0001', 'avg_g': '1.0017', 'dist_m': '36.5572', 'status': 'OK', 'gear': 'D', 'rpm': '7416', 'dmg': '0'}

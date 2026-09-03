@@ -1,0 +1,28 @@
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+partConfig: vehicles/etk800/LSTMABS_baseline_stock.pc
+hasABS: 0
+lens tag: baseline_stock
+[LSTMABS_baseline_stock] run 1/1 @ 60mph ...  {'runID': '1788341768-0001', 'avg_g': '0.8933', 'dist_m': '40.9932', 'status': 'OK', 'gear': 'D', 'rpm': '7479', 'dmg': '0'}
+engagements: 1
+partConfig: vehicles/etk800/LSTMABS_baseline_stock800.pc
+hasABS: 0
+lens tag: baseline_stock800
+[LSTMABS_baseline_stock800] run 1/1 @ 60mph ...  {'runID': '1788341800-0001', 'avg_g': '1.0716', 'dist_m': '34.1715', 'status': 'OK', 'gear': 'D', 'rpm': '7475', 'dmg': '0'}
+engagements: 1
+partConfig: vehicles/etk800/LSTMABS_baseline_stock16.pc
+hasABS: 0
+lens tag: baseline_stock16
+[LSTMABS_baseline_stock16] run 1/1 @ 60mph ...  {'runID': '1788341830-0001', 'avg_g': '0.7467', 'dist_m': '49.0416', 'status': 'OK', 'gear': 'D', 'rpm': '7462', 'dmg': '0'}
+engagements: 1
+partConfig: vehicles/etk800/LSTMABS_baseline_stocknorpm.pc
+hasABS: 0
+lens tag: baseline_stocknorpm
+[LSTMABS_baseline_stocknorpm] run 1/1 @ 60mph ...  {'runID': '1788341861-0001', 'avg_g': '0.9874', 'dist_m': '37.0845', 'status': 'OK', 'gear': 'D', 'rpm': '7561', 'dmg': '0'}
+engagements: 1
+2539 trace/log lines -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\control_trace_obscap2_20260902_0235.log
+RESULT ('LSTMABS_baseline_stock', {'runID': '1788341768-0001', 'avg_g': '0.8933', 'dist_m': '40.9932', 'status': 'OK', 'gear': 'D', 'rpm': '7479', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_stock800', {'runID': '1788341800-0001', 'avg_g': '1.0716', 'dist_m': '34.1715', 'status': 'OK', 'gear': 'D', 'rpm': '7475', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_stock16', {'runID': '1788341830-0001', 'avg_g': '0.7467', 'dist_m': '49.0416', 'status': 'OK', 'gear': 'D', 'rpm': '7462', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_stocknorpm', {'runID': '1788341861-0001', 'avg_g': '0.9874', 'dist_m': '37.0845', 'status': 'OK', 'gear': 'D', 'rpm': '7561', 'dmg': '0'})

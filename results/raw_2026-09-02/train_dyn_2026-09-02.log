@@ -1,0 +1,171 @@
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+Building cache from 4949 parquet episodes...
+  ...250/4949  kept=250
+  ...500/4949  kept=500
+  ...750/4949  kept=750
+  ...1000/4949  kept=1000
+  ...1250/4949  kept=1250
+  ...1500/4949  kept=1500
+  ...1750/4949  kept=1750
+  ...2000/4949  kept=2000
+  ...2250/4949  kept=2250
+  ...2500/4949  kept=2500
+  ...2750/4949  kept=2750
+  ...3000/4949  kept=2997
+  ...3250/4949  kept=3247
+  ...3500/4949  kept=3496
+  ...3750/4949  kept=3745
+  ...4000/4949  kept=3992
+  ...4250/4949  kept=4242
+  ...4500/4949  kept=4492
+  ...4750/4949  kept=4742
+4937 usable episodes
+per-car max torque (Nm):
+   sbr        [3000. 3000. 3000. 3000.]
+   vivace     [3000. 3000.  980.  980.]
+   etkc       [2800. 2800. 1500. 1500.]
+   etk800     [3100. 3100. 1700. 1700.]
+   pickup     [3671. 3645. 1440. 1440.]
+   sunburst2  [2700. 2700.  750.  750.]
+   scintilla  [2986. 2986. 2500. 2500.]
+   lansdale   [3200. 3200. 1013. 1013.]
+   bastion    [4300. 4300. 1388. 1388.]
+cached -> recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 1391  (variants=['dyn_abs'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 1183 train episodes / 208 val episodes
+
+--- lens: baseline ---
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02983  val_MAE(frac of car max)=[0.2242 0.2268 0.129  0.1263]
+    epoch  2  train=0.02622  val_MAE(frac of car max)=[0.1935 0.1971 0.1013 0.0975]
+    epoch  4  train=0.02268  val_MAE(frac of car max)=[0.1658 0.1721 0.0952 0.0913]
+    epoch  6  train=0.02144  val_MAE(frac of car max)=[0.157  0.1632 0.0899 0.0865]
+    epoch  8  train=0.01945  val_MAE(frac of car max)=[0.1502 0.1553 0.086  0.0827]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.1502 FL=0.1553 RR=0.0860 RL=0.0827
+
+Models -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\lens_models_corpus
+zeroing channels in train+deploy: ['sensor_x', 'sensor_y', 'sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 1391  (variants=['dyn_abs'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 1183 train episodes / 208 val episodes
+
+--- lens: baseline ---
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02993  val_MAE(frac of car max)=[0.1977 0.2022 0.1068 0.1028]
+    epoch  2  train=0.02631  val_MAE(frac of car max)=[0.1933 0.1972 0.0982 0.0953]
+    epoch  4  train=0.02204  val_MAE(frac of car max)=[0.1619 0.1702 0.0968 0.0923]
+    epoch  6  train=0.02014  val_MAE(frac of car max)=[0.1539 0.1667 0.092  0.0887]
+    epoch  8  train=0.01537  val_MAE(frac of car max)=[0.1165 0.1238 0.0864 0.0823]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.1165 FL=0.1238 RR=0.0864 RL=0.0823
+
+Models -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\lens_models_corpus
+zeroing channels in train+deploy: ['sensor_x', 'sensor_y', 'sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 1759  (variants=['dyn_abs', 'stock_abs', 'stock_full', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 1496 train episodes / 263 val episodes
+
+--- lens: baseline ---
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02927  val_MAE(frac of car max)=[0.1943 0.1946 0.1113 0.1073]
+    epoch  2  train=0.02510  val_MAE(frac of car max)=[0.1882 0.1887 0.1083 0.1048]
+    epoch  4  train=0.02126  val_MAE(frac of car max)=[0.1664 0.1709 0.1111 0.1073]
+    epoch  6  train=0.01955  val_MAE(frac of car max)=[0.1551 0.1645 0.1003 0.0967]
+    epoch  8  train=0.01896  val_MAE(frac of car max)=[0.1534 0.1654 0.0967 0.0937]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.1534 FL=0.1654 RR=0.0967 RL=0.0937
+
+Models -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\lens_models_corpus
+zeroing channels in train+deploy: ['sensor_x', 'sensor_y', 'sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 3018  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_abs', 'stock_full', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2566 train episodes / 452 val episodes
+
+--- lens: baseline ---
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.03028  val_MAE(frac of car max)=[0.1652 0.166  0.1796 0.1788]
+    epoch  2  train=0.02739  val_MAE(frac of car max)=[0.1598 0.1625 0.1816 0.1811]
+    epoch  4  train=0.02604  val_MAE(frac of car max)=[0.1541 0.1595 0.1741 0.1744]
+    epoch  6  train=0.02478  val_MAE(frac of car max)=[0.1468 0.1523 0.1767 0.175 ]
+    epoch  8  train=0.02403  val_MAE(frac of car max)=[0.1401 0.1501 0.1738 0.1732]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.1401 FL=0.1501 RR=0.1738 RL=0.1732
+
+Models -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\lens_models_corpus
+exporting: ['baseline_dyn']
+
+  baseline_dyn   parity max|diff|=6.048e-07  PASS  -> lstmabs_weights_baseline_dyn.lua
+
+installed to <home>\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs\lua\vehicle\controller
+
+ALL PASS
+exporting: ['baseline_dynnoimu']
+
+  baseline_dynnoimu parity max|diff|=2.660e-07  PASS  -> lstmabs_weights_baseline_dynnoimu.lua
+
+installed to <home>\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs\lua\vehicle\controller
+
+ALL PASS
+exporting: ['baseline_dynstock']
+
+  baseline_dynstock parity max|diff|=3.424e-07  PASS  -> lstmabs_weights_baseline_dynstock.lua
+
+installed to <home>\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs\lua\vehicle\controller
+
+ALL PASS
+exporting: ['baseline_dynstocknoabs']
+
+  baseline_dynstocknoabs parity max|diff|=2.742e-07  PASS  -> lstmabs_weights_baseline_dynstocknoabs.lua
+
+installed to <home>\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs\lua\vehicle\controller
+
+ALL PASS
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+partConfig: vehicles/etk800/LSTMABS_baseline_dyn.pc
+hasABS: 0
+lens tag: baseline_dyn
+[LSTMABS_baseline_dyn] run 1/2 @ 60mph ...  {'runID': '1788383664-0001', 'avg_g': '1.1351', 'dist_m': '32.2588', 'status': 'OK', 'gear': 'D', 'rpm': '7471', 'dmg': '0'}
+[LSTMABS_baseline_dyn] run 2/2 @ 60mph ...  {'runID': '1788383697-0002', 'avg_g': '1.1264', 'dist_m': '32.5077', 'status': 'OK', 'gear': 'D', 'rpm': '7457', 'dmg': '0'}
+engagements: 2
+partConfig: vehicles/etk800/LSTMABS_baseline_dynnoimu.pc
+hasABS: 0
+lens tag: baseline_dynnoimu
+[LSTMABS_baseline_dynnoimu] run 1/2 @ 60mph ...  {'runID': '1788383726-0001', 'avg_g': '0.3661', 'dist_m': '100.0251', 'status': 'OK', 'gear': 'D', 'rpm': '7483', 'dmg': '0'}
+[LSTMABS_baseline_dynnoimu] run 2/2 @ 60mph ...  {'runID': '1788383765-0002', 'avg_g': '0.3683', 'dist_m': '99.4258', 'status': 'OK', 'gear': 'D', 'rpm': '7472', 'dmg': '0'}
+engagements: 2
+partConfig: vehicles/etk800/LSTMABS_baseline_dynstock.pc
+hasABS: 0
+lens tag: baseline_dynstock
+[LSTMABS_baseline_dynstock] run 1/2 @ 60mph ...  {'runID': '1788383800-0001', 'avg_g': '0.2235', 'dist_m': '163.8233', 'status': 'OK', 'gear': 'D', 'rpm': '7602', 'dmg': '0'}
+[LSTMABS_baseline_dynstock] run 2/2 @ 60mph ...  {'runID': '1788383841-0002', 'avg_g': '0.2247', 'dist_m': '162.9705', 'status': 'OK', 'gear': 'D', 'rpm': '7604', 'dmg': '0'}
+engagements: 2
+partConfig: vehicles/etk800/LSTMABS_baseline_dynstocknoabs.pc
+hasABS: 0
+lens tag: baseline_dynstocknoabs
+[LSTMABS_baseline_dynstocknoabs] run 1/2 @ 60mph ...  {'runID': '1788383878-0001', 'avg_g': '0.1980', 'dist_m': '184.9850', 'status': 'OK', 'gear': 'D', 'rpm': '7599', 'dmg': '0'}
+[LSTMABS_baseline_dynstocknoabs] run 2/2 @ 60mph ...  {'runID': '1788383920-0002', 'avg_g': '0.1985', 'dist_m': '184.4360', 'status': 'OK', 'gear': 'D', 'rpm': '7598', 'dmg': '0'}
+engagements: 2
+2816 trace/log lines -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\control_trace_dyn_20260902_1413.log
+RESULT ('LSTMABS_baseline_dyn', {'runID': '1788383664-0001', 'avg_g': '1.1351', 'dist_m': '32.2588', 'status': 'OK', 'gear': 'D', 'rpm': '7471', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_dyn', {'runID': '1788383697-0002', 'avg_g': '1.1264', 'dist_m': '32.5077', 'status': 'OK', 'gear': 'D', 'rpm': '7457', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_dynnoimu', {'runID': '1788383726-0001', 'avg_g': '0.3661', 'dist_m': '100.0251', 'status': 'OK', 'gear': 'D', 'rpm': '7483', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_dynnoimu', {'runID': '1788383765-0002', 'avg_g': '0.3683', 'dist_m': '99.4258', 'status': 'OK', 'gear': 'D', 'rpm': '7472', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_dynstock', {'runID': '1788383800-0001', 'avg_g': '0.2235', 'dist_m': '163.8233', 'status': 'OK', 'gear': 'D', 'rpm': '7602', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_dynstock', {'runID': '1788383841-0002', 'avg_g': '0.2247', 'dist_m': '162.9705', 'status': 'OK', 'gear': 'D', 'rpm': '7604', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_dynstocknoabs', {'runID': '1788383878-0001', 'avg_g': '0.1980', 'dist_m': '184.9850', 'status': 'OK', 'gear': 'D', 'rpm': '7599', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_dynstocknoabs', {'runID': '1788383920-0002', 'avg_g': '0.1985', 'dist_m': '184.4360', 'status': 'OK', 'gear': 'D', 'rpm': '7598', 'dmg': '0'})

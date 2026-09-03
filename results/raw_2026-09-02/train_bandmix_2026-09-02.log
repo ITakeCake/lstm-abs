@@ -1,0 +1,66 @@
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2692  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2289 train episodes / 403 val episodes
+
+--- lens: band_g ---
+  bands=33  graded/episode mean=15.21
+  weight bins [0.10,0.28)=0.229, [0.28,0.46)=0.181, [0.46,0.64)=0.251, [0.64,0.82)=0.176, [0.82,1.00)=0.163
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02818  val_MAE(frac of car max)=[0.1738 0.1763 0.1822 0.181 ]
+    epoch  2  train=0.02584  val_MAE(frac of car max)=[0.17   0.1715 0.1781 0.1781]
+    epoch  4  train=0.02498  val_MAE(frac of car max)=[0.1621 0.1646 0.1735 0.1727]
+    epoch  6  train=0.02397  val_MAE(frac of car max)=[0.1561 0.159  0.1733 0.173 ]
+    epoch  8  train=0.02310  val_MAE(frac of car max)=[0.1488 0.1551 0.1717 0.1706]
+
+--- lens: band_gy ---
+  bands=33  graded/episode mean=15.21
+  weight bins [0.10,0.28)=0.229, [0.28,0.46)=0.181, [0.46,0.64)=0.252, [0.64,0.82)=0.175, [0.82,1.00)=0.164
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02812  val_MAE(frac of car max)=[0.1692 0.1728 0.1793 0.1789]
+    epoch  2  train=0.02561  val_MAE(frac of car max)=[0.1647 0.1667 0.1757 0.1749]
+    epoch  4  train=0.02458  val_MAE(frac of car max)=[0.1603 0.1619 0.1725 0.1716]
+    epoch  6  train=0.02348  val_MAE(frac of car max)=[0.1535 0.155  0.1728 0.1722]
+    epoch  8  train=0.02278  val_MAE(frac of car max)=[0.1478 0.1513 0.1674 0.1681]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  band_g         FR=0.1488 FL=0.1551 RR=0.1717 RL=0.1706
+  band_gy        FR=0.1478 FL=0.1513 RR=0.1674 RL=0.1681
+
+Models -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\lens_models_corpus
+exporting: ['band_g_mix']
+
+  band_g_mix     parity max|diff|=1.168e-07  PASS  -> lstmabs_weights_band_g_mix.lua
+
+installed to <home>\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs\lua\vehicle\controller
+
+ALL PASS
+exporting: ['band_gy_mix']
+
+  band_gy_mix    parity max|diff|=1.709e-07  PASS  -> lstmabs_weights_band_gy_mix.lua
+
+installed to <home>\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs\lua\vehicle\controller
+
+ALL PASS
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+partConfig: vehicles/etk800/LSTMABS_band_g_mix.pc
+hasABS: 0
+lens tag: band_g_mix
+[LSTMABS_band_g_mix] run 1/2 @ 60mph ...  {'runID': '1788388501-0001', 'avg_g': '1.1585', 'dist_m': '31.6070', 'status': 'OK', 'gear': 'D', 'rpm': '7492', 'dmg': '0'}
+[LSTMABS_band_g_mix] run 2/2 @ 60mph ...  {'runID': '1788388534-0002', 'avg_g': '1.1286', 'dist_m': '32.4456', 'status': 'OK', 'gear': 'D', 'rpm': '7492', 'dmg': '0'}
+engagements: 2
+partConfig: vehicles/etk800/LSTMABS_band_gy_mix.pc
+hasABS: 0
+lens tag: band_gy_mix
+[LSTMABS_band_gy_mix] run 1/2 @ 60mph ...  {'runID': '1788388562-0001', 'avg_g': '1.1198', 'dist_m': '32.7002', 'status': 'OK', 'gear': 'D', 'rpm': '7478', 'dmg': '0'}
+[LSTMABS_band_gy_mix] run 2/2 @ 60mph ...  {'runID': '1788388595-0002', 'avg_g': '1.1240', 'dist_m': '32.5784', 'status': 'OK', 'gear': 'D', 'rpm': '7478', 'dmg': '0'}
+engagements: 2
+428 trace/log lines -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\control_trace_bandmix_20260902_1534.log
+RESULT ('LSTMABS_band_g_mix', {'runID': '1788388501-0001', 'avg_g': '1.1585', 'dist_m': '31.6070', 'status': 'OK', 'gear': 'D', 'rpm': '7492', 'dmg': '0'})
+RESULT ('LSTMABS_band_g_mix', {'runID': '1788388534-0002', 'avg_g': '1.1286', 'dist_m': '32.4456', 'status': 'OK', 'gear': 'D', 'rpm': '7492', 'dmg': '0'})
+RESULT ('LSTMABS_band_gy_mix', {'runID': '1788388562-0001', 'avg_g': '1.1198', 'dist_m': '32.7002', 'status': 'OK', 'gear': 'D', 'rpm': '7478', 'dmg': '0'})
+RESULT ('LSTMABS_band_gy_mix', {'runID': '1788388595-0002', 'avg_g': '1.1240', 'dist_m': '32.5784', 'status': 'OK', 'gear': 'D', 'rpm': '7478', 'dmg': '0'})

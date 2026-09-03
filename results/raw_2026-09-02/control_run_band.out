@@ -1,0 +1,28 @@
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+partConfig: vehicles/etk800/LSTMABS_band_g_dyn.pc
+hasABS: 0
+lens tag: band_g_dyn
+[LSTMABS_band_g_dyn] run 1/2 @ 60mph ...  {'runID': '1788387641-0001', 'avg_g': '1.0644', 'dist_m': '34.4040', 'status': 'OK', 'gear': 'D', 'rpm': '7472', 'dmg': '0'}
+[LSTMABS_band_g_dyn] run 2/2 @ 60mph ...  {'runID': '1788387673-0002', 'avg_g': '1.0628', 'dist_m': '34.4554', 'status': 'OK', 'gear': 'D', 'rpm': '7456', 'dmg': '0'}
+engagements: 2
+partConfig: vehicles/etk800/LSTMABS_band_gy_dyn.pc
+hasABS: 0
+lens tag: band_gy_dyn
+[LSTMABS_band_gy_dyn] run 1/2 @ 60mph ...  {'runID': '1788387702-0001', 'avg_g': '1.0554', 'dist_m': '34.6948', 'status': 'OK', 'gear': 'D', 'rpm': '7493', 'dmg': '0'}
+[LSTMABS_band_gy_dyn] run 2/2 @ 60mph ...  {'runID': '1788387735-0002', 'avg_g': '1.0459', 'dist_m': '35.0118', 'status': 'OK', 'gear': 'D', 'rpm': '7476', 'dmg': '0'}
+engagements: 2
+partConfig: vehicles/etk800/LSTMABS_baseline_dyn.pc
+hasABS: 0
+lens tag: baseline_dyn
+[LSTMABS_baseline_dyn] run 1/2 @ 60mph ...  {'runID': '1788387764-0001', 'avg_g': '1.1304', 'dist_m': '32.3944', 'status': 'OK', 'gear': 'D', 'rpm': '7462', 'dmg': '0'}
+[LSTMABS_baseline_dyn] run 2/2 @ 60mph ...  {'runID': '1788387797-0002', 'avg_g': '1.1122', 'dist_m': '32.9227', 'status': 'OK', 'gear': 'D', 'rpm': '7479', 'dmg': '0'}
+engagements: 2
+650 trace/log lines -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\control_trace_band_20260902_1519.log
+RESULT ('LSTMABS_band_g_dyn', {'runID': '1788387641-0001', 'avg_g': '1.0644', 'dist_m': '34.4040', 'status': 'OK', 'gear': 'D', 'rpm': '7472', 'dmg': '0'})
+RESULT ('LSTMABS_band_g_dyn', {'runID': '1788387673-0002', 'avg_g': '1.0628', 'dist_m': '34.4554', 'status': 'OK', 'gear': 'D', 'rpm': '7456', 'dmg': '0'})
+RESULT ('LSTMABS_band_gy_dyn', {'runID': '1788387702-0001', 'avg_g': '1.0554', 'dist_m': '34.6948', 'status': 'OK', 'gear': 'D', 'rpm': '7493', 'dmg': '0'})
+RESULT ('LSTMABS_band_gy_dyn', {'runID': '1788387735-0002', 'avg_g': '1.0459', 'dist_m': '35.0118', 'status': 'OK', 'gear': 'D', 'rpm': '7476', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_dyn', {'runID': '1788387764-0001', 'avg_g': '1.1304', 'dist_m': '32.3944', 'status': 'OK', 'gear': 'D', 'rpm': '7462', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_dyn', {'runID': '1788387797-0002', 'avg_g': '1.1122', 'dist_m': '32.9227', 'status': 'OK', 'gear': 'D', 'rpm': '7479', 'dmg': '0'})

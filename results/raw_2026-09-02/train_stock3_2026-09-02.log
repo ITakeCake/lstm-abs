@@ -1,0 +1,19 @@
+zeroing channels in train+deploy: ['rpm', 'gear']
+loading cache <home>\Desktop\Beamng_AI\ml\SpeedLSTM\recorded_data_2khz_clean\_cache_corpus.npz
+2950 episodes in memory
+episode filter: 2950 -> 764  (variants=['stock_abs', 'stock_full'] minus none, models=all, min_peak_g=0.9)
+
+split: 650 train episodes / 114 val episodes
+
+--- lens: baseline ---
+  train seqs=282,917  val seqs=52,082
+    epoch  1  train=0.02226  val_MAE(frac of car max)=[0.1296 0.1249 0.1423 0.1449]
+    epoch  2  train=0.01855  val_MAE(frac of car max)=[0.1232 0.1234 0.1404 0.143 ]
+    epoch  4  train=0.01578  val_MAE(frac of car max)=[0.1099 0.1079 0.1308 0.1275]
+    epoch  6  train=0.01302  val_MAE(frac of car max)=[0.1032 0.0984 0.1206 0.1213]
+    epoch  8  train=0.01143  val_MAE(frac of car max)=[0.0995 0.0939 0.1147 0.1149]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.0995 FL=0.0939 RR=0.1147 RL=0.1149
+
+Models -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\lens_models_corpus

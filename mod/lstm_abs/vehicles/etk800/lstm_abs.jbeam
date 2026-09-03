@@ -1,0 +1,36 @@
+{
+  "etk_DSE_LSTM_ABS": {
+    "information": {
+      "authors": "ITakeCake",
+      "name": "LSTM ABS (lens from lstmabs_lens.txt)",
+      "value": 250
+    },
+    "slotType": "etk_DSE_ABS",
+    "pressureWheels": [
+      [
+        "name",
+        "hubGroup",
+        "group",
+        "node1:",
+        "node2:",
+        "nodeS",
+        "nodeArm:",
+        "wheelDir"
+      ],
+      {
+        "enableABS": false
+      }
+    ],
+    "controller": [
+      [
+        "fileName"
+      ],
+      [
+        "lstm_abs",
+        {
+          "lens": "baseline_dyn"
+        }
+      ]
+    ]
+  }
+}

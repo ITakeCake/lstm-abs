@@ -1,0 +1,40 @@
+loading cache <home>\Desktop\Beamng_AI\ml\SpeedLSTM\recorded_data_2khz_clean\_cache_corpus.npz
+2950 episodes in memory
+episode filter: 2950 -> 257  (variants=['stock_abs', 'stock_full'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 219 train episodes / 38 val episodes
+
+--- lens: baseline ---
+  train seqs=101,651  val seqs=18,391
+    epoch  1  train=0.02491  val_MAE(frac of car max)=[0.1581 0.1576 0.1373 0.1327]
+    epoch  2  train=0.01920  val_MAE(frac of car max)=[0.1382 0.1385 0.1301 0.1238]
+    epoch  4  train=0.01734  val_MAE(frac of car max)=[0.1307 0.1345 0.1215 0.1174]
+    epoch  6  train=0.01585  val_MAE(frac of car max)=[0.1222 0.1247 0.1191 0.1164]
+    epoch  8  train=0.01482  val_MAE(frac of car max)=[0.1148 0.123  0.1204 0.1173]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.1148 FL=0.1230 RR=0.1204 RL=0.1173
+
+Models -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\lens_models_corpus
+loading cache <home>\Desktop\Beamng_AI\ml\SpeedLSTM\recorded_data_2khz_clean\_cache_corpus.npz
+2950 episodes in memory
+episode filter: 2950 -> 764  (variants=['stock_abs', 'stock_full'] minus none, models=all, min_peak_g=0.9)
+
+split: 650 train episodes / 114 val episodes
+
+--- lens: baseline ---
+  train seqs=282,917  val seqs=52,082
+    epoch  1  train=0.02207  val_MAE(frac of car max)=[0.1275 0.1226 0.1457 0.1466]
+    epoch  2  train=0.01835  val_MAE(frac of car max)=[0.1202 0.1181 0.1405 0.1418]
+    epoch  4  train=0.01604  val_MAE(frac of car max)=[0.1134 0.1115 0.1282 0.1286]
+    epoch  6  train=0.01337  val_MAE(frac of car max)=[0.1036 0.1013 0.119  0.1207]
+    epoch  8  train=0.01177  val_MAE(frac of car max)=[0.0975 0.0936 0.1113 0.1126]
+    epoch 10  train=0.01071  val_MAE(frac of car max)=[0.0907 0.0908 0.1086 0.1095]
+    epoch 12  train=0.01003  val_MAE(frac of car max)=[0.0882 0.0869 0.1072 0.1087]
+    epoch 14  train=0.00950  val_MAE(frac of car max)=[0.0879 0.0857 0.1067 0.1074]
+    epoch 16  train=0.00915  val_MAE(frac of car max)=[0.0832 0.0854 0.1042 0.1038]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.0832 FL=0.0854 RR=0.1042 RL=0.1038
+
+Models -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\lens_models_corpus

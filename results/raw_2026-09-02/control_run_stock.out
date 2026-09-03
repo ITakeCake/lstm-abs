@@ -1,0 +1,28 @@
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+partConfig: vehicles/etk800/LSTMABS_baseline_stock.pc
+hasABS: 0
+lens tag: baseline_stock
+[LSTMABS_baseline_stock] run 1/2 @ 60mph ...  {'runID': '1788341071-0001', 'avg_g': '0.8942', 'dist_m': '40.9518', 'status': 'OK', 'gear': 'D', 'rpm': '7488', 'dmg': '0'}
+[LSTMABS_baseline_stock] run 2/2 @ 60mph ...  {'runID': '1788341106-0002', 'avg_g': '0.8937', 'dist_m': '40.9723', 'status': 'OK', 'gear': 'D', 'rpm': '7427', 'dmg': '0'}
+engagements: 2
+partConfig: vehicles/etk800/LSTMABS_avg_g_window_stock.pc
+hasABS: 0
+lens tag: avg_g_window_stock
+[LSTMABS_avg_g_window_stock] run 1/2 @ 60mph ...  {'runID': '1788341137-0001', 'avg_g': '1.0319', 'dist_m': '35.4849', 'status': 'OK', 'gear': 'D', 'rpm': '7418', 'dmg': '0'}
+[LSTMABS_avg_g_window_stock] run 2/2 @ 60mph ...  {'runID': '1788341171-0002', 'avg_g': '1.0260', 'dist_m': '35.6900', 'status': 'OK', 'gear': 'D', 'rpm': '7427', 'dmg': '0'}
+engagements: 2
+partConfig: vehicles/etk800/LSTMABS_curation_hg.pc
+hasABS: 0
+lens tag: curation_hg
+[LSTMABS_curation_hg] run 1/2 @ 60mph ...  {'runID': '1788341202-0001', 'avg_g': '0.8813', 'dist_m': '41.5480', 'status': 'OK', 'gear': 'D', 'rpm': '7267', 'dmg': '0'}
+[LSTMABS_curation_hg] run 2/2 @ 60mph ...  {'runID': '1788341236-0002', 'avg_g': '0.8935', 'dist_m': '40.9841', 'status': 'OK', 'gear': 'D', 'rpm': '7256', 'dmg': '0'}
+engagements: 2
+401 trace/log lines -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\control_trace_stock_20260902_0223.log
+RESULT ('LSTMABS_baseline_stock', {'runID': '1788341071-0001', 'avg_g': '0.8942', 'dist_m': '40.9518', 'status': 'OK', 'gear': 'D', 'rpm': '7488', 'dmg': '0'})
+RESULT ('LSTMABS_baseline_stock', {'runID': '1788341106-0002', 'avg_g': '0.8937', 'dist_m': '40.9723', 'status': 'OK', 'gear': 'D', 'rpm': '7427', 'dmg': '0'})
+RESULT ('LSTMABS_avg_g_window_stock', {'runID': '1788341137-0001', 'avg_g': '1.0319', 'dist_m': '35.4849', 'status': 'OK', 'gear': 'D', 'rpm': '7418', 'dmg': '0'})
+RESULT ('LSTMABS_avg_g_window_stock', {'runID': '1788341171-0002', 'avg_g': '1.0260', 'dist_m': '35.6900', 'status': 'OK', 'gear': 'D', 'rpm': '7427', 'dmg': '0'})
+RESULT ('LSTMABS_curation_hg', {'runID': '1788341202-0001', 'avg_g': '0.8813', 'dist_m': '41.5480', 'status': 'OK', 'gear': 'D', 'rpm': '7267', 'dmg': '0'})
+RESULT ('LSTMABS_curation_hg', {'runID': '1788341236-0002', 'avg_g': '0.8935', 'dist_m': '40.9841', 'status': 'OK', 'gear': 'D', 'rpm': '7256', 'dmg': '0'})

@@ -1,0 +1,26 @@
+lens,mph,dist_m,avg_g,status,engagements,cfg,banner
+baseline,60,160.7351,0.2278,OK,4,vehicles/etk800/LSTMABS_baseline.pc,LSTM_ABS: lens 'baseline' loaded
+baseline,60,160.4386,0.2282,OK,4,vehicles/etk800/LSTMABS_baseline.pc,LSTM_ABS: lens 'baseline' loaded
+baseline,80,302.1557,0.2156,OK,4,vehicles/etk800/LSTMABS_baseline.pc,LSTM_ABS: lens 'baseline' loaded
+baseline,80,301.3099,0.2162,OK,4,vehicles/etk800/LSTMABS_baseline.pc,LSTM_ABS: lens 'baseline' loaded
+avg_g_window,60,160.4523,0.2282,OK,4,vehicles/etk800/LSTMABS_avg_g_window.pc,LSTM_ABS: lens 'avg_g_window' loaded
+avg_g_window,60,159.8557,0.2291,OK,4,vehicles/etk800/LSTMABS_avg_g_window.pc,LSTM_ABS: lens 'avg_g_window' loaded
+avg_g_window,80,366.7388,0.1776,OK,4,vehicles/etk800/LSTMABS_avg_g_window.pc,LSTM_ABS: lens 'avg_g_window' loaded
+avg_g_window,80,365.9324,0.1780,OK,4,vehicles/etk800/LSTMABS_avg_g_window.pc,LSTM_ABS: lens 'avg_g_window' loaded
+peak_g,60,159.5242,0.2295,OK,4,vehicles/etk800/LSTMABS_peak_g.pc,LSTM_ABS: lens 'peak_g' loaded
+peak_g,60,158.6127,0.2309,OK,4,vehicles/etk800/LSTMABS_peak_g.pc,LSTM_ABS: lens 'peak_g' loaded
+peak_g,80,366.1936,0.1779,OK,4,vehicles/etk800/LSTMABS_peak_g.pc,LSTM_ABS: lens 'peak_g' loaded
+peak_g,80,365.0803,0.1784,OK,4,vehicles/etk800/LSTMABS_peak_g.pc,LSTM_ABS: lens 'peak_g' loaded
+yaw_intent,60,162.5766,0.2252,OK,4,vehicles/etk800/LSTMABS_yaw_intent.pc,LSTM_ABS: lens 'yaw_intent' loaded
+yaw_intent,60,161.8432,0.2263,OK,4,vehicles/etk800/LSTMABS_yaw_intent.pc,LSTM_ABS: lens 'yaw_intent' loaded
+yaw_intent,80,368.9236,0.1766,OK,4,vehicles/etk800/LSTMABS_yaw_intent.pc,LSTM_ABS: lens 'yaw_intent' loaded
+yaw_intent,80,368.8848,0.1766,OK,4,vehicles/etk800/LSTMABS_yaw_intent.pc,LSTM_ABS: lens 'yaw_intent' loaded
+combined,60,,,TIMEOUT,1,vehicles/etk800/LSTMABS_combined.pc,LSTM_ABS: lens 'combined' loaded
+combined,60,,,TIMEOUT,1,vehicles/etk800/LSTMABS_combined.pc,LSTM_ABS: lens 'combined' loaded
+combined,80,,,TIMEOUT,1,vehicles/etk800/LSTMABS_combined.pc,LSTM_ABS: lens 'combined' loaded
+combined,80,160.9226,0.2276,OK,1,vehicles/etk800/LSTMABS_combined.pc,LSTM_ABS: lens 'combined' loaded
+curation,60,36.4770,1.0039,OK,5,vehicles/etk800/LSTMABS_curation.pc,LSTM_ABS: lens 'curation' loaded
+curation,60,35.9767,1.0178,OK,5,vehicles/etk800/LSTMABS_curation.pc,LSTM_ABS: lens 'curation' loaded
+curation,80,36.0486,1.0158,OK,5,vehicles/etk800/LSTMABS_curation.pc,LSTM_ABS: lens 'curation' loaded
+curation,80,64.7350,1.0062,OK,5,vehicles/etk800/LSTMABS_curation.pc,LSTM_ABS: lens 'curation' loaded
+REFERENCE_dlaw,,,,VERIFY_FAILED,,v=0.0 act=nil cmdFR=-1.000 cmdRR=-1.000 | FR bt=3100.0 dbt=3100.0 ws=0.00 | RR bt=1700.0 dbt=1487.5 ws=0.01 | brake=1.00,Dynamic_ABS banner

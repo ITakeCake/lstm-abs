@@ -1,0 +1,63 @@
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+Building cache from 4949 parquet episodes...
+  ...250/4949  kept=250
+  ...500/4949  kept=500
+  ...750/4949  kept=750
+  ...1000/4949  kept=1000
+  ...1250/4949  kept=1250
+  ...1500/4949  kept=1500
+  ...1750/4949  kept=1750
+  ...2000/4949  kept=2000
+  ...2250/4949  kept=2250
+  ...2500/4949  kept=2500
+  ...2750/4949  kept=2750
+  ...3000/4949  kept=2997
+  ...3250/4949  kept=3247
+  ...3500/4949  kept=3496
+  ...3750/4949  kept=3745
+  ...4000/4949  kept=3992
+  ...4250/4949  kept=4242
+  ...4500/4949  kept=4492
+  ...4750/4949  kept=4742
+4937 usable episodes
+per-car max torque (Nm):
+   sbr        [3000. 3000. 3000. 3000.]
+   vivace     [3000. 3000.  980.  980.]
+   etkc       [2800. 2800. 1500. 1500.]
+   etk800     [3100. 3100. 1700. 1700.]
+   pickup     [3671. 3645. 1440. 1440.]
+   sunburst2  [2700. 2700.  750.  750.]
+   scintilla  [2986. 2986. 2500. 2500.]
+   lansdale   [3200. 3200. 1013. 1013.]
+   bastion    [4300. 4300. 1388. 1388.]
+cached -> recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 1328  (variants=['dyn_abs'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 1129 train episodes / 199 val episodes
+
+--- lens: band_g ---
+  bands=33  graded/episode mean=11.65
+  weight bins [0.10,0.28)=0.210, [0.28,0.46)=0.164, [0.46,0.64)=0.309, [0.64,0.82)=0.161, [0.82,1.00)=0.156
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02793  val_MAE(frac of car max)=[0.2184 0.2209 0.1103 0.1079]
+    epoch  2  train=0.02562  val_MAE(frac of car max)=[0.2034 0.2048 0.1055 0.1018]
+    epoch  4  train=0.02268  val_MAE(frac of car max)=[0.1824 0.1825 0.1024 0.0986]
+    epoch  6  train=0.02017  val_MAE(frac of car max)=[0.1705 0.1705 0.0983 0.094 ]
+    epoch  8  train=0.01876  val_MAE(frac of car max)=[0.166  0.163  0.0903 0.0871]
+
+--- lens: band_gy ---
+  bands=33  graded/episode mean=11.65
+  weight bins [0.10,0.28)=0.210, [0.28,0.46)=0.164, [0.46,0.64)=0.309, [0.64,0.82)=0.161, [0.82,1.00)=0.156
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02843  val_MAE(frac of car max)=[0.2111 0.2143 0.1085 0.1053]
+    epoch  2  train=0.02501  val_MAE(frac of car max)=[0.204  0.2069 0.1085 0.1052]
+    epoch  4  train=0.02214  val_MAE(frac of car max)=[0.1762 0.1826 0.1026 0.0991]
+    epoch  6  train=0.02001  val_MAE(frac of car max)=[0.1675 0.1767 0.1001 0.0974]
+    epoch  8  train=0.01886  val_MAE(frac of car max)=[0.1509 0.1623 0.0932 0.0904]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  band_g         FR=0.1660 FL=0.1630 RR=0.0903 RL=0.0871
+  band_gy        FR=0.1509 FL=0.1623 RR=0.0932 RL=0.0904
+
+Models -> <home>\Desktop\Beamng_AI\ml\SpeedLSTM\lens_models_corpus
