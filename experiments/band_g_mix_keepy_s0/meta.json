@@ -1,0 +1,123 @@
+{
+  "name": "band_g_mix_keepy_s0",
+  "lens": "band_g",
+  "trained": "2026-09-03T14:07:29",
+  "args": {
+    "rebuild_cache": false,
+    "limit_files": null,
+    "epochs": 8,
+    "seed": 0,
+    "lock_slip": 0.5,
+    "lock_speed_mph": 5.0,
+    "lock_weight": 0.1,
+    "slip_keep": "0.05,0.25",
+    "slip_keep_window": 20,
+    "slip_keep_good": 1.5,
+    "slip_keep_bad": 0.4,
+    "slip_good": "",
+    "slip_good_weight": 1.5,
+    "yaw_deadzone": 0.015,
+    "yaw_good": 1.5,
+    "yaw_bad": 0.5,
+    "zero_cols": "sensor_z,roll_angle,pitch_angle,gear",
+    "tag": "_mix_keepy_s0",
+    "lenses": "band_g",
+    "variants": "dyn_abs,stock_tel,no_abs,no_safety",
+    "exclude_variants": "",
+    "models": "etk800",
+    "roots": "recorded_data_2khz_clean,recorded_data_2khz_clean_tel",
+    "cache": "recorded_data_2khz_clean_tel/_cache_all.npz",
+    "sensor_src": "gy2",
+    "min_peak_g": 0.9,
+    "band_mph": 5.0,
+    "band_overlap": 1
+  },
+  "train_episodes": 2289,
+  "val_episodes": 403,
+  "train_seqs": 400000,
+  "val_seqs": 100000,
+  "epochs": 8,
+  "val_mae_final": [
+    0.15259,
+    0.15739,
+    0.17198,
+    0.17108
+  ],
+  "val_mae_by_epoch": [
+    [
+      0.17573,
+      0.1799,
+      0.18412,
+      0.18313
+    ],
+    [
+      0.17279,
+      0.17276,
+      0.17976,
+      0.18007
+    ],
+    [
+      0.17052,
+      0.17193,
+      0.18271,
+      0.18069
+    ],
+    [
+      0.16645,
+      0.16967,
+      0.17579,
+      0.17544
+    ],
+    [
+      0.16561,
+      0.1674,
+      0.1749,
+      0.17584
+    ],
+    [
+      0.1599,
+      0.16259,
+      0.17453,
+      0.17402
+    ],
+    [
+      0.15575,
+      0.15935,
+      0.17562,
+      0.17443
+    ],
+    [
+      0.15259,
+      0.15739,
+      0.17198,
+      0.17108
+    ]
+  ],
+  "zero_cols": [
+    "sensor_z",
+    "roll_angle",
+    "pitch_angle",
+    "gear"
+  ],
+  "sensor_src": "gy2",
+  "seq_len": 30,
+  "band_mph": 5.0,
+  "band_overlap": 1,
+  "seed": 0,
+  "lock_slip": 0.5,
+  "lock_speed_mph": 5.0,
+  "lock_weight": 0.1,
+  "slip_good": [
+    0.0,
+    0.0
+  ],
+  "slip_good_weight": 1.5,
+  "yaw_dz": 0.015,
+  "yaw_good": 1.5,
+  "yaw_bad": 0.5,
+  "slip_keep": [
+    0.05,
+    0.25
+  ],
+  "slip_keep_window": 20
+}

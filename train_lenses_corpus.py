@@ -49,6 +49,10 @@ SLIP_GOOD_WEIGHT = 1.5
 YAW_DZ = 0.0            # rad/s; 0 disables yaw-match weighting
 YAW_GOOD = 1.5
 YAW_BAD = 0.5
+SLIP_KEEP = (0.0, 0.0)  # (lo, hi) grip plateau; weight by how much of the next window stays inside it
+SLIP_KEEP_WINDOW = 20   # 200Hz ticks (~100ms) of forward look
+SLIP_KEEP_GOOD = 1.5
+SLIP_KEEP_BAD = 0.4
 WHEELBASE_BY_MODEL = {"etk800": 2.86, "etkc": 2.86, "sbr": 2.50, "vivace": 2.60}
 EXP_DIR = SCRIPT_DIR / "experiments"
 TAG = ""
@@ -323,6 +327,24 @@ def lock_multiplier(eps):
     return out
 
 
+def slip_keep_multiplier(eps):
+    """Weight the ACTION: fraction of the next window whose slip stays inside the grip plateau."""
+    lo, hi = SLIP_KEEP
+    w = SLIP_KEEP_WINDOW
+    v_min = LOCK_SPEED_MPH * MPH_TO_MPS
+    kern = np.ones(w) / w
+    out = []
+    for e in eps:
+        speed = e["speed"]
+        slip = 1.0 - e["X"][:, :4] / np.maximum(speed, 0.5)[:, None]
+        inband = ((slip >= lo) & (slip <= hi)).mean(axis=1)
+        pad = np.concatenate([inband, np.full(w, inband[-1])])
+        fwd = np.convolve(pad, kern, mode="valid")[:len(inband)]
+        m = SLIP_KEEP_BAD + (SLIP_KEEP_GOOD - SLIP_KEEP_BAD) * np.clip(fwd, 0, 1)
+        out.append(np.where(speed > v_min, m, 1.0).astype(np.float32))
+    return out
+
+
 def slip_good_multiplier(eps):
     """1 + (SLIP_GOOD_WEIGHT-1) * fraction of wheels inside the good slip band, above LOCK_SPEED_MPH."""
     out = []
@@ -352,6 +374,13 @@ def yaw_match_multiplier(eps):
 
 
 def apply_lock_weight(eps, weights):
+    if SLIP_KEEP[1] > 0:
+        mult = slip_keep_multiplier(eps)
+        n_all = sum(int(e["brake"].sum()) for e in eps)
+        n_good = sum(int(((m > (SLIP_KEEP_GOOD + SLIP_KEEP_BAD) / 2) & e["brake"]).sum()) for m, e in zip(mult, eps))
+        print(f"  slip-keep {SLIP_KEEP} over {SLIP_KEEP_WINDOW} ticks x{SLIP_KEEP_GOOD}/x{SLIP_KEEP_BAD}: "
+              f"{100.0 * n_good / max(n_all, 1):.1f}% of braking ticks score above midpoint")
+        weights = [w * m for w, m in zip(weights, mult)]
     if SLIP_GOOD[1] > 0:
         mult = slip_good_multiplier(eps)
         n_all = sum(int(e["brake"].sum()) for e in eps)
@@ -535,7 +564,8 @@ def train_lens(lens, eps, train_ids, val_ids, feat_mean, feat_std, car_max, epoc
             "zero_cols": list(ZERO_COLS), "sensor_src": SENSOR_SRC, "seq_len": SEQ_LEN,
             "band_mph": BAND_MPH, "band_overlap": BAND_OVERLAP, "seed": SEED,
             "lock_slip": LOCK_SLIP, "lock_speed_mph": LOCK_SPEED_MPH, "lock_weight": LOCK_WEIGHT,
-            "slip_good": list(SLIP_GOOD), "slip_good_weight": SLIP_GOOD_WEIGHT, "yaw_dz": YAW_DZ, "yaw_good": YAW_GOOD, "yaw_bad": YAW_BAD}
+            "slip_good": list(SLIP_GOOD), "slip_good_weight": SLIP_GOOD_WEIGHT, "yaw_dz": YAW_DZ, "yaw_good": YAW_GOOD, "yaw_bad": YAW_BAD,
+            "slip_keep": list(SLIP_KEEP), "slip_keep_window": SLIP_KEEP_WINDOW}
     (exp / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     return {"lens": lens, "val_mae": mae.tolist(), "path": str(path)}
 
@@ -550,6 +580,10 @@ def main():
     ap.add_argument("--lock-slip", type=float, default=0.0, help="down-weight ticks with any wheel slip above this (0 = off)")
     ap.add_argument("--lock-speed-mph", type=float, default=5.0, help="only above this true speed")
     ap.add_argument("--lock-weight", type=float, default=0.1, help="multiplier for those ticks")
+    ap.add_argument("--slip-keep", type=str, default="", help="lo,hi grip plateau; weights ticks by how much of the next window stays inside it")
+    ap.add_argument("--slip-keep-window", type=int, default=20)
+    ap.add_argument("--slip-keep-good", type=float, default=1.5)
+    ap.add_argument("--slip-keep-bad", type=float, default=0.4)
     ap.add_argument("--slip-good", type=str, default="", help="lo,hi slip band to up-weight above --lock-speed-mph, e.g. 0.08,0.23")
     ap.add_argument("--slip-good-weight", type=float, default=1.5)
     ap.add_argument("--yaw-deadzone", type=float, default=0.0, help="rad/s; enables yaw-match weighting")
@@ -577,6 +611,10 @@ def main():
     global LOCK_SLIP, LOCK_SPEED_MPH, LOCK_WEIGHT
     LOCK_SLIP, LOCK_SPEED_MPH, LOCK_WEIGHT = args.lock_slip, args.lock_speed_mph, args.lock_weight
     global SLIP_GOOD, SLIP_GOOD_WEIGHT, YAW_DZ, YAW_GOOD, YAW_BAD
+    global SLIP_KEEP, SLIP_KEEP_WINDOW, SLIP_KEEP_GOOD, SLIP_KEEP_BAD
+    if args.slip_keep:
+        SLIP_KEEP = tuple(float(x) for x in args.slip_keep.split(","))
+    SLIP_KEEP_WINDOW, SLIP_KEEP_GOOD, SLIP_KEEP_BAD = args.slip_keep_window, args.slip_keep_good, args.slip_keep_bad
     if args.slip_good:
         SLIP_GOOD = tuple(float(x) for x in args.slip_good.split(","))
     SLIP_GOOD_WEIGHT = args.slip_good_weight
