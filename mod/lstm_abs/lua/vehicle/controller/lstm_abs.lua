@@ -1,19 +1,18 @@
--- lstm_abs.lua - runs a lens-trained LSTM as the vehicle's ABS.
--- Net outputs per-wheel brake torque as a 0-1 fraction of that car's max, which
--- maps onto the stock pipeline's capacity scaling (desiredBrakingTorque =
--- capacity * pedal).
+-- lstm_abs.lua - runs one or more lens-trained LSTMs as the vehicle's ABS.
+-- Each net outputs per-wheel brake torque as a 0-1 fraction of that car's max; an
+-- ensemble averages the members. The fraction maps onto the stock pipeline's
+-- capacity scaling (desiredBrakingTorque = capacity * pedal).
 --
--- Runs at 200Hz (matches the 10x training downsample), state carried between
--- ticks and zeroed at each brake engage so the net starts near the regime its
--- fixed-length training windows came from.
+-- Runs at 200Hz (matches the 10x training downsample), state carried between ticks
+-- and zeroed at each brake engage.
 
 local M = {}
 M.type = "auxiliary"
 M.relevantDevice = nil
 
-local W = nil
+local nets = {}            -- loaded members, each with its own weights and state
 local weightsOk = false
-local lensName = "baseline"
+local lensName = "baseline_dyn"
 
 local TICK_STEP = 1 / 200
 local timeAccum = 0
@@ -24,7 +23,7 @@ local RELEASE_SPEED = 0.5
 local WARMUP_TICKS = 2
 local WARMUP_FRAC = 0.05
 local CMD_FLOOR = 0.01
-local FORCE_CMD = nil      -- nil = run the net; constant = actuation control test
+local FORCE_CMD = nil      -- nil = run the nets; constant = actuation control test
 local TRACE_EVERY = 10     -- 200Hz ticks per trace line, 0 disables
 
 local engaged = false
@@ -35,12 +34,10 @@ local origCapacity = {0, 0, 0, 0}
 local invSplit = {1, 1, 1, 1}
 local wheelCount = 0
 
-local mean, std = nil, nil
-local layers = nil
-local headW, headB = nil, nil
-local hBuf, cBuf, xBuf, gBuf = nil, nil, nil, nil
+local INPUT_DIM = 17
 local cmd = {0, 0, 0, 0}
-local obs = nil
+local obs = {}
+for i = 1, INPUT_DIM do obs[i] = 0 end
 
 local mabs, mexp, mmin, mmax = math.abs, math.exp, math.min, math.max
 local macos = math.acos
@@ -86,19 +83,25 @@ local function parseBlob(s, n)
   return t
 end
 
-local function loadWeights(name)
+local function requireWeights(name)
   package.loaded["controller/lstmabs_weights_" .. name] = nil   -- allow runtime reload
   local ok, mod = pcall(require, "controller/lstmabs_weights_" .. name)
   if not ok or type(mod) ~= "table" then
     print("=== LSTM_ABS: weights missing for lens '" .. tostring(name) .. "' ===")
-    return false
+    return nil
   end
-  W = mod
-  mean = parseBlob(W.mean_s, W.input_dim)
-  std = parseBlob(W.std_s, W.input_dim)
-  if not mean or not std then print("=== LSTM_ABS: bad norm blobs ===") return false end
+  return mod
+end
 
-  layers = {}
+-- builds one member net (weights, normalization, preallocated state) from a weight module
+local function buildNet(W)
+  if W.input_dim ~= INPUT_DIM then print("=== LSTM_ABS: input_dim mismatch ===") return nil end
+  local net = {W = W, name = W.lens, cmd = {0, 0, 0, 0}}
+  net.mean = parseBlob(W.mean_s, W.input_dim)
+  net.std = parseBlob(W.std_s, W.input_dim)
+  if not net.mean or not net.std then print("=== LSTM_ABS: bad norm blobs ===") return nil end
+
+  net.layers = {}
   for li, L in ipairs(W.layers) do
     local H, D = L.hidden, L.in_dim
     local wih = parseBlob(L.w_ih_s, 4 * H * D)
@@ -107,48 +110,63 @@ local function loadWeights(name)
     local bhh = parseBlob(L.b_hh_s, 4 * H)
     if not (wih and whh and bih and bhh) then
       print("=== LSTM_ABS: bad layer " .. li .. " blob ===")
-      return false
+      return nil
     end
-    layers[li] = {H = H, D = D, wih = wih, whh = whh, bih = bih, bhh = bhh}
+    net.layers[li] = {H = H, D = D, wih = wih, whh = whh, bih = bih, bhh = bhh}
   end
 
-  headW = parseBlob(W.head.w_s, W.head.rows * W.head.cols)
-  headB = parseBlob(W.head.b_s, W.head.rows)
-  if not headW or not headB then print("=== LSTM_ABS: bad head blob ===") return false end
+  net.headW = parseBlob(W.head.w_s, W.head.rows * W.head.cols)
+  net.headB = parseBlob(W.head.b_s, W.head.rows)
+  if not net.headW or not net.headB then print("=== LSTM_ABS: bad head blob ===") return nil end
 
   -- preallocate every buffer; zero allocation per tick
-  hBuf, cBuf, gBuf = {}, {}, {}
-  for li, L in ipairs(layers) do
-    hBuf[li], cBuf[li], gBuf[li] = {}, {}, {}
-    for i = 1, L.H do hBuf[li][i] = 0; cBuf[li][i] = 0 end
-    for i = 1, 4 * L.H do gBuf[li][i] = 0 end
+  net.hBuf, net.cBuf, net.gBuf = {}, {}, {}
+  for li, L in ipairs(net.layers) do
+    net.hBuf[li], net.cBuf[li], net.gBuf[li] = {}, {}, {}
+    for i = 1, L.H do net.hBuf[li][i] = 0; net.cBuf[li][i] = 0 end
+    for i = 1, 4 * L.H do net.gBuf[li][i] = 0 end
   end
-  xBuf = {}
-  for i = 1, W.input_dim do xBuf[i] = 0 end
-  obs = {}
-  for i = 1, W.input_dim do obs[i] = 0 end
+  net.xBuf = {}
+  for i = 1, W.input_dim do net.xBuf[i] = 0 end
+  return net
+end
 
-  print(("=== LSTM_ABS: lens '%s' loaded (%d in, %d hidden, %d layers) ==="):format(
-    W.lens, W.input_dim, W.hidden, #layers))
+-- a weight module with M.members is an ensemble descriptor
+local function loadWeights(name)
+  local W = requireWeights(name)
+  if not W then return false end
+  local members = W.members or {name}
+  local loaded = {}
+  for _, mname in ipairs(members) do
+    local MW = (mname == name) and W or requireWeights(mname)
+    local net = MW and buildNet(MW)
+    if not net then return false end
+    loaded[#loaded + 1] = net
+  end
+  nets = loaded
+  print(("=== LSTM_ABS: lens '%s' loaded (%d member%s, %d in, %d hidden, %d layers) ==="):format(
+    name, #nets, #nets == 1 and "" or "s", INPUT_DIM, nets[1].W.hidden, #nets[1].layers))
   return true
 end
 
 local function resetState()
-  if not layers then return end
-  for li, L in ipairs(layers) do
-    local h, c = hBuf[li], cBuf[li]
-    for i = 1, L.H do h[i] = 0; c[i] = 0 end
+  for _, net in ipairs(nets) do
+    for li, L in ipairs(net.layers) do
+      local h, c = net.hBuf[li], net.cBuf[li]
+      for i = 1, L.H do h[i] = 0; c[i] = 0 end
+    end
   end
 end
 
--- one LSTM timestep, mirrors export_lstm_abs.py's lua_forward exactly
-local function stepNet()
-  local x, xn = xBuf, W.input_dim
+-- one LSTM timestep for one member, mirrors export_lstm_abs.py's lua_forward exactly
+local function stepNet(net)
+  local x, xn = net.xBuf, INPUT_DIM
+  local layers = net.layers
   for li = 1, #layers do
     local L = layers[li]
     local H, D = L.H, xn
-    local g, wih, whh, bih, bhh = gBuf[li], L.wih, L.whh, L.bih, L.bhh
-    local h, c = hBuf[li], cBuf[li]
+    local g, wih, whh, bih, bhh = net.gBuf[li], L.wih, L.whh, L.bih, L.bhh
+    local h, c = net.hBuf[li], net.cBuf[li]
 
     for k = 1, 4 * H do
       local acc = bih[k] + bhh[k]
@@ -171,37 +189,59 @@ local function stepNet()
     x, xn = h, H
   end
 
-  local rows, cols = W.head.rows, W.head.cols
+  local rows, cols = net.W.head.rows, net.W.head.cols
+  local headW, headB, out = net.headW, net.headB, net.cmd
   for k = 1, rows do
     local acc = headB[k]
     local base = (k - 1) * cols
     for j = 1, cols do acc = acc + headW[base + j] * x[j] end
-    cmd[k] = sigmoid(acc)
+    out[k] = sigmoid(acc)
   end
 end
 
+-- normalizes the shared raw obs into each member's input buffer, steps all, averages
+local function stepAll()
+  local n = #nets
+  cmd[1], cmd[2], cmd[3], cmd[4] = 0, 0, 0, 0
+  for _, net in ipairs(nets) do
+    local W, mean, std, x = net.W, net.mean, net.std, net.xBuf
+    for i = 1, INPUT_DIM do x[i] = obs[i] end
+    if W.zero_idx then
+      for _, zi in ipairs(W.zero_idx) do x[zi] = 0 end
+    end
+    for i = 1, INPUT_DIM do
+      x[i] = clampNum((x[i] - mean[i]) / std[i], -W.clip_obs, W.clip_obs)
+    end
+    stepNet(net)
+    local c = net.cmd
+    cmd[1] = cmd[1] + c[1] / n
+    cmd[2] = cmd[2] + c[2] / n
+    cmd[3] = cmd[3] + c[3] / n
+    cmd[4] = cmd[4] + c[4] / n
+  end
+end
 
--- deterministic Lua-vs-numpy forward check; feeds a fixed pre-normalized
--- sequence so normalization is excluded and only the net math is tested
+-- deterministic Lua-vs-numpy forward check per member on a fixed pre-normalized sequence
 local function selfTest()
   resetState()
-  for t = 1, 30 do
-    for i = 1, W.input_dim do
-      xBuf[i] = 0.1 * i - 0.5 + 0.01 * t
+  for _, net in ipairs(nets) do
+    for t = 1, 30 do
+      for i = 1, INPUT_DIM do net.xBuf[i] = 0.1 * i - 0.5 + 0.01 * t end
+      stepNet(net)
     end
-    stepNet()
+    local c = net.cmd
+    print(("=== LSTM_ABS SELFTEST lens=%s cmd=%.6f,%.6f,%.6f,%.6f ==="):format(
+      tostring(net.name), c[1], c[2], c[3], c[4]))
   end
-  print(("=== LSTM_ABS SELFTEST lens=%s cmd=%.6f,%.6f,%.6f,%.6f ==="):format(
-    tostring(W.lens), cmd[1], cmd[2], cmd[3], cmd[4]))
   resetState()
 end
 
--- obs order must match W.input_cols exactly
+-- obs order must match the exporter's input_cols exactly
 local function buildObs()
   local wr = wheels.wheelRotators
   local ev = electrics.values
   local sx, sy, sz = 0, 0, 0
-  if W.sensor_src == "gy2" then
+  if nets[1].W.sensor_src == "gy2" then
     sx, sy, sz = sensors.gx2 or 0, sensors.gy2 or 0, sensors.gz2 or 0   -- matches the telemetry logger
   elseif sensors and sensors.ffiSensors then
     sx = sensors.ffiSensors.sensorX or 0
@@ -231,13 +271,6 @@ local function buildObs()
   o[15] = pitch
   o[16] = ev.rpm or 0
   o[17] = ev.gear_A or ev.gearIndex or 0
-
-  if W.zero_idx then
-    for _, zi in ipairs(W.zero_idx) do o[zi] = 0 end
-  end
-  for i = 1, W.input_dim do
-    xBuf[i] = clampNum((o[i] - mean[i]) / std[i], -W.clip_obs, W.clip_obs)
-  end
 end
 
 -- pedal-split gain at full pedal; logged torques already include it
@@ -308,22 +341,22 @@ local function traceLine()
     tostring(wr[2].absActive), tostring(wr[3].absActive), tostring(wr[0].absActive), tostring(wr[1].absActive),
     ev.brake or -1, input.brake or -1, tostring(ev.hasABS), obs[6], 1 / invSplit[3], 1 / invSplit[1]))
   local ro = {}
-  for i = 1, W.input_dim do ro[i] = string.format("%.5f", obs[i]) end
+  for i = 1, INPUT_DIM do ro[i] = string.format("%.5f", obs[i]) end
   print("=== LSTM_OBS t=" .. dbgTicks .. " " .. table.concat(ro, ",") .. " ===")
 end
 
 local function runTick()
   buildObs()
-  stepNet()
+  stepAll()
   if FORCE_CMD then cmd[1], cmd[2], cmd[3], cmd[4] = FORCE_CMD, FORCE_CMD, FORCE_CMD, FORCE_CMD end
   if TRACE_EVERY > 0 and dbgTicks % TRACE_EVERY == 0 then traceLine() end
   if warmup > 0 then warmup = warmup - 1 end
   dbgTicks = dbgTicks + 1
   if dbgTicks == 15 then
     local ro, nz = {}, {}
-    for i = 1, W.input_dim do
+    for i = 1, INPUT_DIM do
       ro[i] = string.format("%.4f", obs[i])
-      nz[i] = string.format("%.2f", xBuf[i])
+      nz[i] = string.format("%.2f", nets[1].xBuf[i])
     end
     print("=== LSTM_ABS DBG raw=" .. table.concat(ro, ",") .. " ===")
     print("=== LSTM_ABS DBG norm=" .. table.concat(nz, ",") .. " ===")

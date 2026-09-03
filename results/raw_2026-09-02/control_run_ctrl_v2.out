@@ -1,0 +1,9 @@
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+lens tag: band_g_mix  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix] run 1/1 @ 60mph ...  {'runID': '1788400580-0001', 'avg_g': '1.1546', 'dist_m': '31.7152', 'status': 'OK', 'gear': 'D', 'rpm': '7485', 'dmg': '0'}
+engagements: 1
+98 trace/log lines -> C:\Users\Blake\Desktop\lstm-abs\results\control_trace_ctrl_v2_20260902_1855.log
+RESULT ('band_g_mix', {'runID': '1788400580-0001', 'avg_g': '1.1546', 'dist_m': '31.7152', 'status': 'OK', 'gear': 'D', 'rpm': '7485', 'dmg': '0'})

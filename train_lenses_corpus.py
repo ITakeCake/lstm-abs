@@ -40,6 +40,7 @@ CACHE_PATH = SCRIPT_DIR / "recorded_data_2khz_clean" / "_cache_corpus.npz"
 CLEAN_ROOTS = [CLEAN_ROOT]
 SENSOR_SRC = "ffi"
 RUN_ARGS = {}
+SEED = 0
 EXP_DIR = SCRIPT_DIR / "experiments"
 TAG = ""
 
@@ -401,7 +402,7 @@ def train_lens(lens, eps, train_ids, val_ids, feat_mean, feat_std, car_max, epoc
     if lens.startswith("band_"):
         print_band_weight_summary(eps, ids, w)
 
-    tr = SeqDataset(eps, ids, w, feat_mean, feat_std, MAX_SEQ_PER_LENS)
+    tr = SeqDataset(eps, ids, w, feat_mean, feat_std, MAX_SEQ_PER_LENS, seed=SEED)
     uniform = [np.ones(len(e["avg_g"]), dtype=np.float32) for e in eps]
     va = SeqDataset(eps, val_ids, uniform, feat_mean, feat_std, MAX_SEQ_PER_LENS // 4, seed=1)
     if len(tr) == 0 or len(va) == 0:
@@ -413,6 +414,7 @@ def train_lens(lens, eps, train_ids, val_ids, feat_mean, feat_std, car_max, epoc
     dl_tr = DataLoader(tr, batch_size=512, shuffle=True, num_workers=0)
     dl_va = DataLoader(va, batch_size=1024, shuffle=False, num_workers=0)
 
+    torch.manual_seed(SEED)
     model = LSTMBrakeNet(len(INPUT_COLS), len(TARGET_COLS)).to(dev)
     opt = torch.optim.Adam(model.parameters(), lr=1e-3)
     lossf = nn.SmoothL1Loss(reduction="none")
@@ -454,7 +456,7 @@ def train_lens(lens, eps, train_ids, val_ids, feat_mean, feat_std, car_max, epoc
             "train_seqs": len(tr), "val_seqs": len(va), "epochs": epochs,
             "val_mae_final": [round(float(x), 5) for x in mae], "val_mae_by_epoch": mae_hist,
             "zero_cols": list(ZERO_COLS), "sensor_src": SENSOR_SRC, "seq_len": SEQ_LEN,
-            "band_mph": BAND_MPH, "band_overlap": BAND_OVERLAP}
+            "band_mph": BAND_MPH, "band_overlap": BAND_OVERLAP, "seed": SEED}
     (exp / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     return {"lens": lens, "val_mae": mae.tolist(), "path": str(path)}
 
@@ -465,6 +467,7 @@ def main():
     ap.add_argument("--rebuild-cache", action="store_true")
     ap.add_argument("--limit-files", type=int, default=None)
     ap.add_argument("--epochs", type=int, default=8)
+    ap.add_argument("--seed", type=int, default=0, help="init + sequence-sampling seed; the val split stays fixed")
     ap.add_argument("--zero-cols", type=str, default="")
     ap.add_argument("--tag", type=str, default="")
     ap.add_argument("--lenses", type=str, default="baseline,avg_g_window,peak_g,yaw_intent,combined,curation")
@@ -482,6 +485,8 @@ def main():
                     help="band windows covering each speed; step = band_mph/band_overlap")
     args = ap.parse_args()
     RUN_ARGS = vars(args)
+    global SEED
+    SEED = args.seed
     TAG = args.tag
     SENSOR_SRC = args.sensor_src
     BAND_MPH = args.band_mph

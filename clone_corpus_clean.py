@@ -4,7 +4,7 @@ copy, keeping the realistic-obs whitelist, the torque targets, and the
 grading-only columns. Masters are read-only - never modified.
 
 Column groups:
-  INPUT_COLS  - legal model inputs (whitelist agreed with Blake)
+  INPUT_COLS  - legal model inputs (whitelist)
   TARGET_COLS - per-wheel brake torque (the action being learned)
   GRADE_COLS  - cheat columns, legal for offline grading only, never as input
   META_COLS   - provenance / filtering

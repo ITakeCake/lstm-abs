@@ -17,9 +17,13 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--lenses", default="", help="comma list of experiments to export first")
     ap.add_argument("--set-lens", default="", help="write lstmabs_lens.txt so the game boots with this lens")
+    ap.add_argument("--ensemble", default="", help="name=a,b,c passed through to the exporter")
     a = ap.parse_args()
-    if a.lenses:
-        subprocess.check_call([sys.executable, os.path.join(REPO, "export_lstm_abs.py"), "--lens", a.lenses])
+    if a.lenses or a.ensemble:
+        cmd = [sys.executable, os.path.join(REPO, "export_lstm_abs.py"), "--lens", a.lenses or ""]
+        if a.ensemble:
+            cmd += ["--ensemble", a.ensemble]
+        subprocess.check_call(cmd)
     n = 0
     for root, _, files in os.walk(MOD_SRC):
         for f in files:
