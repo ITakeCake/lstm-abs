@@ -1,0 +1,114 @@
+{
+  "name": "band_g_mix_lock_s2",
+  "lens": "band_g",
+  "trained": "2026-09-03T00:12:39",
+  "args": {
+    "rebuild_cache": false,
+    "limit_files": null,
+    "epochs": 8,
+    "seed": 2,
+    "lock_slip": 0.5,
+    "lock_speed_mph": 5.0,
+    "lock_weight": 0.1,
+    "slip_good": "",
+    "slip_good_weight": 1.5,
+    "yaw_deadzone": 0.0,
+    "yaw_good": 1.5,
+    "yaw_bad": 0.5,
+    "zero_cols": "sensor_z,roll_angle,pitch_angle,gear",
+    "tag": "_mix_lock_s2",
+    "lenses": "band_g",
+    "variants": "dyn_abs,stock_tel,no_abs,no_safety",
+    "exclude_variants": "",
+    "models": "etk800",
+    "roots": "recorded_data_2khz_clean,recorded_data_2khz_clean_tel",
+    "cache": "recorded_data_2khz_clean_tel/_cache_all.npz",
+    "sensor_src": "gy2",
+    "min_peak_g": 0.9,
+    "band_mph": 5.0,
+    "band_overlap": 1
+  },
+  "train_episodes": 2289,
+  "val_episodes": 403,
+  "train_seqs": 400000,
+  "val_seqs": 100000,
+  "epochs": 8,
+  "val_mae_final": [
+    0.15082,
+    0.15738,
+    0.17089,
+    0.16978
+  ],
+  "val_mae_by_epoch": [
+    [
+      0.17598,
+      0.17904,
+      0.18083,
+      0.18062
+    ],
+    [
+      0.1693,
+      0.172,
+      0.17903,
+      0.1789
+    ],
+    [
+      0.16617,
+      0.16875,
+      0.1775,
+      0.17741
+    ],
+    [
+      0.1671,
+      0.16978,
+      0.17855,
+      0.17813
+    ],
+    [
+      0.16817,
+      0.17348,
+      0.17593,
+      0.17442
+    ],
+    [
+      0.15797,
+      0.16002,
+      0.17199,
+      0.17131
+    ],
+    [
+      0.15612,
+      0.16137,
+      0.17274,
+      0.1735
+    ],
+    [
+      0.15082,
+      0.15738,
+      0.17089,
+      0.16978
+    ]
+  ],
+  "zero_cols": [
+    "sensor_z",
+    "roll_angle",
+    "pitch_angle",
+    "gear"
+  ],
+  "sensor_src": "gy2",
+  "seq_len": 30,
+  "band_mph": 5.0,
+  "band_overlap": 1,
+  "seed": 2,
+  "lock_slip": 0.5,
+  "lock_speed_mph": 5.0,
+  "lock_weight": 0.1,
+  "slip_good": [
+    0.0,
+    0.0
+  ],
+  "slip_good_weight": 1.5,
+  "yaw_dz": 0.0,
+  "yaw_good": 1.5,
+  "yaw_bad": 0.5
+}

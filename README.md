@@ -32,13 +32,17 @@ below rather than hidden.
 
 ## Results, 60 mph straight-line stop, standard 2 kHz brake metric
 
-| controller | avg g | distance | yaw during stop |
+| controller | avg g (mean of n runs) | distance | yaw during stop |
 |---|---|---|---|
-| DynamicABS (hand-written PID, the teacher) | 1.207 | 30.3 m | 1.0 deg |
-| **LSTM `band_g_mix`** | **1.144** | **32.0 m** | 3.0 deg |
-| LSTM `baseline_dyn` | 1.126 | 32.5 m | 4.6 deg |
-| LSTM `band_gy_mix` | 1.122 | 32.6 m | 1.0 deg |
-| locked wheels (control run) | 1.002 | 36.6 m | 3.5 deg |
+| DynamicABS (hand-written PID, the teacher) | 1.207 (n=4) | 30.3 m | 1.0 deg |
+| **LSTM `band_g_mix_lock_sy`** | **1.143 (n=2)** | **32.0 m** | 1.8 deg |
+| LSTM `band_g_mix_b1o1_s2` | 1.147 (n=2) | 31.9 m | 2.0 deg |
+| LSTM `band_g_mix` | 1.130 (n=8) | 32.4 m | 3.1 deg |
+| LSTM `baseline_dyn` | 1.123 (n=7) | 32.6 m | 4.7 deg |
+| locked wheels (control run) | 1.002 (n=1) | 36.6 m | 3.5 deg |
+
+The top three LSTM entries are a statistical tie: seed-to-seed spread on an unchanged
+recipe is about 0.06 g, larger than the gap between them.
 
 Full per-run data and every training run's validation error: `results/LSTM_ABS_RESULTS.xlsx`
 (generated from the experiment folders); corpus statistics behind the findings:
@@ -77,7 +81,14 @@ Full per-run data and every training run's validation error: `results/LSTM_ABS_R
    band against every other stop of the same car, weight ticks by rank. On a pool of
    three controllers it picks the best one per band and beats plain DynamicABS
    cloning. On a single controller it only removes data and hurts.
-6. **Remaining gap to the teacher:** every net still lets wheels lock below ~10 m/s,
+6. **Tick weights that describe the action beat ones that describe the state.**
+   Up-weighting ticks whose measured yaw matched the steering command suppressed wheel
+   lock (one variant completed a whole stop with peak slip 0.47 and no locked wheel).
+   Up-weighting ticks sitting in the "good" 0.08-0.23 slip band did the opposite: those
+   are precisely the moments when the logged controller was holding steady and changing
+   torque the least (mean |change| 0.111 per tick, versus 0.127-0.134 outside the band),
+   so the net learned to hold rather than modulate.
+7. **Remaining gap to the teacher:** most nets still let wheels lock below ~10 m/s,
    where the logs contain almost no fully-locked states to learn from. Candidate next
    steps are narrower grading bands, longer context, an ensemble, or relabeling the
    logs with the teacher's own control law.
