@@ -1,0 +1,18 @@
+launching BeamNG.drive on smallgrid (attempt 1) ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+lens tag: band_g_mix_lock_sy  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_lock_sy] run 1/2 @ 60mph ...  {'runID': '1788412271-0001', 'avg_g': '1.1392', 'dist_m': '32.1429', 'status': 'OK', 'gear': 'D', 'rpm': '7465', 'dmg': '0'}
+[band_g_mix_lock_sy] run 2/2 @ 60mph ...  {'runID': '1788412304-0002', 'avg_g': '1.1464', 'dist_m': '31.9408', 'status': 'OK', 'gear': 'D', 'rpm': '7446', 'dmg': '0'}
+engagements: 2
+lens tag: band_g_mix_lock  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_lock] run 1/2 @ 60mph ...  {'runID': '1788412341-0003', 'avg_g': '1.1007', 'dist_m': '33.2682', 'status': 'OK', 'gear': 'D', 'rpm': '7464', 'dmg': '0'}
+[band_g_mix_lock] run 2/2 @ 60mph ...  {'runID': '1788412373-0004', 'avg_g': '1.0995', 'dist_m': '33.3055', 'status': 'OK', 'gear': 'D', 'rpm': '7488', 'dmg': '0'}
+engagements: 4
+425 trace/log lines -> C:\Users\Blake\Desktop\lstm-abs\results\control_trace_slipyaw3_20260902_2209.log
+RESULT ('band_g_mix_lock_sy', {'runID': '1788412271-0001', 'avg_g': '1.1392', 'dist_m': '32.1429', 'status': 'OK', 'gear': 'D', 'rpm': '7465', 'dmg': '0'})
+RESULT ('band_g_mix_lock_sy', {'runID': '1788412304-0002', 'avg_g': '1.1464', 'dist_m': '31.9408', 'status': 'OK', 'gear': 'D', 'rpm': '7446', 'dmg': '0'})
+RESULT ('band_g_mix_lock', {'runID': '1788412341-0003', 'avg_g': '1.1007', 'dist_m': '33.2682', 'status': 'OK', 'gear': 'D', 'rpm': '7464', 'dmg': '0'})
+RESULT ('band_g_mix_lock', {'runID': '1788412373-0004', 'avg_g': '1.0995', 'dist_m': '33.3055', 'status': 'OK', 'gear': 'D', 'rpm': '7488', 'dmg': '0'})

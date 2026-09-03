@@ -1,0 +1,101 @@
+{
+  "name": "baseline_dyn_lock",
+  "lens": "baseline",
+  "trained": "2026-09-02T21:17:44",
+  "args": {
+    "rebuild_cache": false,
+    "limit_files": null,
+    "epochs": 8,
+    "seed": 0,
+    "lock_slip": 0.5,
+    "lock_speed_mph": 5.0,
+    "lock_weight": 0.1,
+    "zero_cols": "sensor_z,roll_angle,pitch_angle,gear",
+    "tag": "_dyn_lock",
+    "lenses": "baseline",
+    "variants": "dyn_abs",
+    "exclude_variants": "",
+    "models": "etk800",
+    "roots": "recorded_data_2khz_clean,recorded_data_2khz_clean_tel",
+    "cache": "recorded_data_2khz_clean_tel/_cache_all.npz",
+    "sensor_src": "gy2",
+    "min_peak_g": 0.9,
+    "band_mph": 5.0,
+    "band_overlap": 1
+  },
+  "train_episodes": 1129,
+  "val_episodes": 199,
+  "train_seqs": 400000,
+  "val_seqs": 100000,
+  "epochs": 8,
+  "val_mae_final": [
+    0.13261,
+    0.15194,
+    0.08818,
+    0.08624
+  ],
+  "val_mae_by_epoch": [
+    [
+      0.20284,
+      0.20553,
+      0.11563,
+      0.11307
+    ],
+    [
+      0.19724,
+      0.19943,
+      0.10658,
+      0.10471
+    ],
+    [
+      0.18285,
+      0.18706,
+      0.1019,
+      0.09957
+    ],
+    [
+      0.16938,
+      0.17553,
+      0.09844,
+      0.09689
+    ],
+    [
+      0.16481,
+      0.1711,
+      0.09433,
+      0.09292
+    ],
+    [
+      0.16162,
+      0.16983,
+      0.09082,
+      0.08879
+    ],
+    [
+      0.15811,
+      0.17273,
+      0.08789,
+      0.08563
+    ],
+    [
+      0.13261,
+      0.15194,
+      0.08818,
+      0.08624
+    ]
+  ],
+  "zero_cols": [
+    "sensor_z",
+    "roll_angle",
+    "pitch_angle",
+    "gear"
+  ],
+  "sensor_src": "gy2",
+  "seq_len": 30,
+  "band_mph": 5.0,
+  "band_overlap": 1,
+  "seed": 0,
+  "lock_slip": 0.5,
+  "lock_speed_mph": 5.0,
+  "lock_weight": 0.1
+}

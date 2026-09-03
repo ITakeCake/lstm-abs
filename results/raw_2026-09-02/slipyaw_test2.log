@@ -1,0 +1,20 @@
+launching BeamNG.drive on smallgrid (attempt 1) ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+lens tag: band_g_mix_lock_s  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_lock_s] run 1/2 @ 60mph ...  {'runID': '1788410563-0002', 'avg_g': '1.0781', 'dist_m': '33.9666', 'status': 'OK', 'gear': 'D', 'rpm': '7494', 'dmg': '0'}
+[band_g_mix_lock_s] run 2/2 @ 60mph ...  {'runID': '1788410595-0003', 'avg_g': '1.0691', 'dist_m': '34.2528', 'status': 'OK', 'gear': 'D', 'rpm': '7490', 'dmg': '0'}
+engagements: 4
+lens tag: band_g_mix_lock_sy  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_lock_sy] run 1/2 @ 60mph ...  None
+[band_g_mix_lock_sy] run 2/2 @ 60mph ...  None
+engagements: None
+lens tag: None  ->  MISMATCH
+  !! lens did not load, skipping
+336 trace/log lines -> C:\Users\Blake\Desktop\lstm-abs\results\control_trace_slipyaw_20260902_2141.log
+RESULT ('band_g_mix_lock_s', {'runID': '1788410563-0002', 'avg_g': '1.0781', 'dist_m': '33.9666', 'status': 'OK', 'gear': 'D', 'rpm': '7494', 'dmg': '0'})
+RESULT ('band_g_mix_lock_s', {'runID': '1788410595-0003', 'avg_g': '1.0691', 'dist_m': '34.2528', 'status': 'OK', 'gear': 'D', 'rpm': '7490', 'dmg': '0'})
+RESULT ('band_g_mix_lock_sy', None)
+RESULT ('band_g_mix_lock_sy', None)

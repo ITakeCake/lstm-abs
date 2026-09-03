@@ -1,0 +1,74 @@
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2692  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2289 train episodes / 403 val episodes
+
+--- lens: band_g ---
+  lock down-weight: slip>0.5 above 5.0mph -> x0.1 on 315,463/1,928,366 braking ticks (16.4%)
+  bands=33  graded/episode mean=15.21
+  weight bins [0.10,0.28)=0.165, [0.28,0.46)=0.187, [0.46,0.64)=0.266, [0.64,0.82)=0.197, [0.82,1.00)=0.185
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02679  val_MAE(frac of car max)=[0.1772 0.1817 0.1822 0.182 ]
+    epoch  2  train=0.02468  val_MAE(frac of car max)=[0.1711 0.1721 0.1775 0.1783]
+    epoch  4  train=0.02411  val_MAE(frac of car max)=[0.1642 0.1682 0.1751 0.1759]
+    epoch  6  train=0.02317  val_MAE(frac of car max)=[0.1551 0.1584 0.1735 0.171 ]
+    epoch  8  train=0.02227  val_MAE(frac of car max)=[0.1506 0.1552 0.171  0.1703]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  band_g         FR=0.1506 FL=0.1552 RR=0.1710 RL=0.1703
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 1328  (variants=['dyn_abs'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 1129 train episodes / 199 val episodes
+
+--- lens: baseline ---
+  lock down-weight: slip>0.5 above 5.0mph -> x0.1 on 106,825/749,550 braking ticks (14.3%)
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02526  val_MAE(frac of car max)=[0.2028 0.2055 0.1156 0.1131]
+    epoch  2  train=0.02217  val_MAE(frac of car max)=[0.1972 0.1994 0.1066 0.1047]
+    epoch  4  train=0.01883  val_MAE(frac of car max)=[0.1694 0.1755 0.0984 0.0969]
+    epoch  6  train=0.01695  val_MAE(frac of car max)=[0.1616 0.1698 0.0908 0.0888]
+    epoch  8  train=0.01479  val_MAE(frac of car max)=[0.1326 0.1519 0.0882 0.0862]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.1326 FL=0.1519 RR=0.0882 RL=0.0862
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+exporting: ['band_g_mix_lock', 'baseline_dyn_lock']
+
+  band_g_mix_lock parity max|diff|=1.163e-07  PASS  -> lstmabs_weights_band_g_mix_lock.lua
+  baseline_dyn_lock parity max|diff|=1.602e-07  PASS  -> lstmabs_weights_baseline_dyn_lock.lua
+
+ALL PASS
+deployed 46 files -> C:\Users\Blake\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+lens tag: band_g_mix_lock  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_lock] run 1/2 @ 60mph ...  {'runID': '1788409135-0001', 'avg_g': '1.1277', 'dist_m': '32.4713', 'status': 'OK', 'gear': 'D', 'rpm': '7481', 'dmg': '0'}
+[band_g_mix_lock] run 2/2 @ 60mph ...  {'runID': '1788409168-0002', 'avg_g': '1.1072', 'dist_m': '33.0721', 'status': 'OK', 'gear': 'D', 'rpm': '7482', 'dmg': '0'}
+engagements: 2
+lens tag: baseline_dyn_lock  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[baseline_dyn_lock] run 1/2 @ 60mph ...  {'runID': '1788409205-0003', 'avg_g': '1.0756', 'dist_m': '34.0434', 'status': 'OK', 'gear': 'D', 'rpm': '7430', 'dmg': '0'}
+[baseline_dyn_lock] run 2/2 @ 60mph ...  {'runID': '1788409238-0004', 'avg_g': '1.0817', 'dist_m': '33.8519', 'status': 'OK', 'gear': 'D', 'rpm': '7449', 'dmg': '0'}
+engagements: 4
+lens tag: band_g_mix  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix] run 1/2 @ 60mph ...  {'runID': '1788409274-0005', 'avg_g': '1.1135', 'dist_m': '32.8853', 'status': 'OK', 'gear': 'D', 'rpm': '7482', 'dmg': '0'}
+[band_g_mix] run 2/2 @ 60mph ...  {'runID': '1788409307-0006', 'avg_g': '1.0904', 'dist_m': '33.5831', 'status': 'OK', 'gear': 'D', 'rpm': '7491', 'dmg': '0'}
+engagements: 6
+641 trace/log lines -> C:\Users\Blake\Desktop\lstm-abs\results\control_trace_lockweight_20260902_2117.log
+RESULT ('band_g_mix_lock', {'runID': '1788409135-0001', 'avg_g': '1.1277', 'dist_m': '32.4713', 'status': 'OK', 'gear': 'D', 'rpm': '7481', 'dmg': '0'})
+RESULT ('band_g_mix_lock', {'runID': '1788409168-0002', 'avg_g': '1.1072', 'dist_m': '33.0721', 'status': 'OK', 'gear': 'D', 'rpm': '7482', 'dmg': '0'})
+RESULT ('baseline_dyn_lock', {'runID': '1788409205-0003', 'avg_g': '1.0756', 'dist_m': '34.0434', 'status': 'OK', 'gear': 'D', 'rpm': '7430', 'dmg': '0'})
+RESULT ('baseline_dyn_lock', {'runID': '1788409238-0004', 'avg_g': '1.0817', 'dist_m': '33.8519', 'status': 'OK', 'gear': 'D', 'rpm': '7449', 'dmg': '0'})
+RESULT ('band_g_mix', {'runID': '1788409274-0005', 'avg_g': '1.1135', 'dist_m': '32.8853', 'status': 'OK', 'gear': 'D', 'rpm': '7482', 'dmg': '0'})
+RESULT ('band_g_mix', {'runID': '1788409307-0006', 'avg_g': '1.0904', 'dist_m': '33.5831', 'status': 'OK', 'gear': 'D', 'rpm': '7491', 'dmg': '0'})

@@ -92,15 +92,20 @@ def launch_game():
     if lvl and "grid" in lvl.lower():
         print(f"attached to running game on level '{lvl}'")
         return True
-    print("launching BeamNG.drive on smallgrid ...")
-    subprocess.Popen([EXE, "-level", "smallgrid"], cwd=str(Path(EXE).parent))
-    for i in range(60):
-        time.sleep(10)
-        lvl = probe("getCurrentLevelIdentifier()", timeout=4)
-        if lvl and "grid" in lvl.lower():
-            print(f"channel up on level '{lvl}' after ~{(i+1)*10}s")
-            return True
-        print(f"  waiting for channel... {(i+1)*10}s")
+    for attempt in (1, 2):
+        print(f"launching BeamNG.drive on smallgrid (attempt {attempt}) ...")
+        time.sleep(8)   # let the mod manager finish indexing a freshly deployed mod
+        proc = subprocess.Popen([EXE, "-level", "smallgrid"], cwd=str(Path(EXE).parent))
+        for i in range(15):
+            time.sleep(10)
+            lvl = probe("getCurrentLevelIdentifier()", timeout=4)
+            if lvl and "grid" in lvl.lower():
+                print(f"channel up on level '{lvl}' after ~{(i+1)*10}s")
+                return True
+            print(f"  waiting for channel... {(i+1)*10}s")
+        print("  channel never came up (UI boot timeout?), closing this instance")
+        proc.kill()
+        time.sleep(5)
     return False
 
 

@@ -41,6 +41,15 @@ CLEAN_ROOTS = [CLEAN_ROOT]
 SENSOR_SRC = "ffi"
 RUN_ARGS = {}
 SEED = 0
+LOCK_SLIP = 0.0        # 0 disables; ticks with any wheel slip above this get LOCK_WEIGHT
+LOCK_SPEED_MPH = 5.0
+LOCK_WEIGHT = 0.1
+SLIP_GOOD = (0.0, 0.0)  # (lo, hi) slip band that gets SLIP_GOOD_WEIGHT above LOCK_SPEED_MPH; (0,0) disables
+SLIP_GOOD_WEIGHT = 1.5
+YAW_DZ = 0.0            # rad/s; 0 disables yaw-match weighting
+YAW_GOOD = 1.5
+YAW_BAD = 0.5
+WHEELBASE_BY_MODEL = {"etk800": 2.86, "etkc": 2.86, "sbr": 2.50, "vivace": 2.60}
 EXP_DIR = SCRIPT_DIR / "experiments"
 TAG = ""
 
@@ -301,8 +310,76 @@ def band_lens_weights(eps, band_mph, band_overlap, use_yaw):
     return out
 
 
+def lock_multiplier(eps):
+    """Per-tick multiplier: LOCK_WEIGHT where a wheel exceeds LOCK_SLIP above LOCK_SPEED_MPH, else 1."""
+    out = []
+    v_min = LOCK_SPEED_MPH * MPH_TO_MPS
+    for e in eps:
+        speed = e["speed"]
+        ws = e["X"][:, :4]
+        slip = 1.0 - ws.min(axis=1) / np.maximum(speed, 0.5)
+        locked = (slip > LOCK_SLIP) & (speed > v_min)
+        out.append(np.where(locked, LOCK_WEIGHT, 1.0).astype(np.float32))
+    return out
+
+
+def slip_good_multiplier(eps):
+    """1 + (SLIP_GOOD_WEIGHT-1) * fraction of wheels inside the good slip band, above LOCK_SPEED_MPH."""
+    out = []
+    lo, hi = SLIP_GOOD
+    v_min = LOCK_SPEED_MPH * MPH_TO_MPS
+    for e in eps:
+        speed = e["speed"]
+        slip = 1.0 - e["X"][:, :4] / np.maximum(speed, 0.5)[:, None]
+        frac = ((slip >= lo) & (slip <= hi)).mean(axis=1)
+        m = 1.0 + (SLIP_GOOD_WEIGHT - 1.0) * frac
+        out.append(np.where(speed > v_min, m, 1.0).astype(np.float32))
+    return out
+
+
+def yaw_match_multiplier(eps):
+    """YAW_GOOD inside the deadzone, YAW_BAD beyond twice it, linear between."""
+    out = []
+    for e in eps:
+        X = e["X"]
+        v = e["speed"]
+        wb = WHEELBASE_BY_MODEL.get(e["model"], 2.7)
+        expected = v * np.tan(X[:, 10]) / wb
+        err = np.abs(X[:, 7] - expected)
+        t = np.clip((err - YAW_DZ) / YAW_DZ, 0.0, 1.0)
+        out.append((YAW_GOOD + (YAW_BAD - YAW_GOOD) * t).astype(np.float32))
+    return out
+
+
+def apply_lock_weight(eps, weights):
+    if SLIP_GOOD[1] > 0:
+        mult = slip_good_multiplier(eps)
+        n_all = sum(int(e["brake"].sum()) for e in eps)
+        n_hit = sum(int(((m > 1.0) & e["brake"]).sum()) for m, e in zip(mult, eps))
+        print(f"  slip-good band {SLIP_GOOD} x{SLIP_GOOD_WEIGHT}: touches {n_hit:,}/{n_all:,} braking ticks ({100.0 * n_hit / max(n_all, 1):.1f}%)")
+        weights = [w * m for w, m in zip(weights, mult)]
+    if YAW_DZ > 0:
+        mult = yaw_match_multiplier(eps)
+        n_all = sum(int(e["brake"].sum()) for e in eps)
+        n_good = sum(int(((m >= YAW_GOOD - 1e-6) & e["brake"]).sum()) for m, e in zip(mult, eps))
+        print(f"  yaw-match dz={YAW_DZ} rad/s x{YAW_GOOD}/x{YAW_BAD}: {100.0 * n_good / max(n_all, 1):.1f}% of braking ticks inside deadzone")
+        weights = [w * m for w, m in zip(weights, mult)]
+    if LOCK_SLIP <= 0:
+        return [np.maximum(w, 0.01).astype(np.float32) for w in weights]
+    mult = lock_multiplier(eps)
+    n_all = sum(int(e["brake"].sum()) for e in eps)
+    n_hit = sum(int(((m < 1.0) & e["brake"]).sum()) for m, e in zip(mult, eps))
+    print(f"  lock down-weight: slip>{LOCK_SLIP} above {LOCK_SPEED_MPH}mph -> x{LOCK_WEIGHT} on "
+          f"{n_hit:,}/{n_all:,} braking ticks ({100.0 * n_hit / max(n_all, 1):.1f}%)")
+    return [np.maximum(w * m, 0.01).astype(np.float32) for w, m in zip(weights, mult)]
+
+
 def lens_weights(eps, lens):
     """Per-tick training weight in [0.1, 1.0]; never 0 so nothing is deleted."""
+    return apply_lock_weight(eps, base_lens_weights(eps, lens))
+
+
+def base_lens_weights(eps, lens):
     if lens == "baseline" or lens == "curation":
         return [np.ones(len(e["avg_g"]), dtype=np.float32) for e in eps]
     if lens == "band_g":
@@ -456,7 +533,9 @@ def train_lens(lens, eps, train_ids, val_ids, feat_mean, feat_std, car_max, epoc
             "train_seqs": len(tr), "val_seqs": len(va), "epochs": epochs,
             "val_mae_final": [round(float(x), 5) for x in mae], "val_mae_by_epoch": mae_hist,
             "zero_cols": list(ZERO_COLS), "sensor_src": SENSOR_SRC, "seq_len": SEQ_LEN,
-            "band_mph": BAND_MPH, "band_overlap": BAND_OVERLAP, "seed": SEED}
+            "band_mph": BAND_MPH, "band_overlap": BAND_OVERLAP, "seed": SEED,
+            "lock_slip": LOCK_SLIP, "lock_speed_mph": LOCK_SPEED_MPH, "lock_weight": LOCK_WEIGHT,
+            "slip_good": list(SLIP_GOOD), "slip_good_weight": SLIP_GOOD_WEIGHT, "yaw_dz": YAW_DZ, "yaw_good": YAW_GOOD, "yaw_bad": YAW_BAD}
     (exp / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     return {"lens": lens, "val_mae": mae.tolist(), "path": str(path)}
 
@@ -468,6 +547,14 @@ def main():
     ap.add_argument("--limit-files", type=int, default=None)
     ap.add_argument("--epochs", type=int, default=8)
     ap.add_argument("--seed", type=int, default=0, help="init + sequence-sampling seed; the val split stays fixed")
+    ap.add_argument("--lock-slip", type=float, default=0.0, help="down-weight ticks with any wheel slip above this (0 = off)")
+    ap.add_argument("--lock-speed-mph", type=float, default=5.0, help="only above this true speed")
+    ap.add_argument("--lock-weight", type=float, default=0.1, help="multiplier for those ticks")
+    ap.add_argument("--slip-good", type=str, default="", help="lo,hi slip band to up-weight above --lock-speed-mph, e.g. 0.08,0.23")
+    ap.add_argument("--slip-good-weight", type=float, default=1.5)
+    ap.add_argument("--yaw-deadzone", type=float, default=0.0, help="rad/s; enables yaw-match weighting")
+    ap.add_argument("--yaw-good", type=float, default=1.5)
+    ap.add_argument("--yaw-bad", type=float, default=0.5)
     ap.add_argument("--zero-cols", type=str, default="")
     ap.add_argument("--tag", type=str, default="")
     ap.add_argument("--lenses", type=str, default="baseline,avg_g_window,peak_g,yaw_intent,combined,curation")
@@ -487,6 +574,13 @@ def main():
     RUN_ARGS = vars(args)
     global SEED
     SEED = args.seed
+    global LOCK_SLIP, LOCK_SPEED_MPH, LOCK_WEIGHT
+    LOCK_SLIP, LOCK_SPEED_MPH, LOCK_WEIGHT = args.lock_slip, args.lock_speed_mph, args.lock_weight
+    global SLIP_GOOD, SLIP_GOOD_WEIGHT, YAW_DZ, YAW_GOOD, YAW_BAD
+    if args.slip_good:
+        SLIP_GOOD = tuple(float(x) for x in args.slip_good.split(","))
+    SLIP_GOOD_WEIGHT = args.slip_good_weight
+    YAW_DZ, YAW_GOOD, YAW_BAD = args.yaw_deadzone, args.yaw_good, args.yaw_bad
     TAG = args.tag
     SENSOR_SRC = args.sensor_src
     BAND_MPH = args.band_mph

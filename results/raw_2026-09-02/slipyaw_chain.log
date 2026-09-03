@@ -1,0 +1,105 @@
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2692  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2289 train episodes / 403 val episodes
+
+--- lens: band_g ---
+  slip-good band (0.08, 0.23) x1.5: touches 1,292,185/1,928,366 braking ticks (67.0%)
+  lock down-weight: slip>0.5 above 5.0mph -> x0.1 on 315,463/1,928,366 braking ticks (16.4%)
+  bands=33  graded/episode mean=15.21
+  weight bins [0.10,0.28)=0.179, [0.28,0.46)=0.181, [0.46,0.64)=0.242, [0.64,0.82)=0.205, [0.82,1.00)=0.193
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02572  val_MAE(frac of car max)=[0.1755 0.1803 0.1812 0.1817]
+    epoch  2  train=0.02361  val_MAE(frac of car max)=[0.1723 0.1734 0.1785 0.1796]
+    epoch  4  train=0.02298  val_MAE(frac of car max)=[0.1647 0.1674 0.1734 0.1747]
+    epoch  6  train=0.02221  val_MAE(frac of car max)=[0.1572 0.1604 0.1738 0.173 ]
+    epoch  8  train=0.02126  val_MAE(frac of car max)=[0.1511 0.1573 0.1708 0.1689]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  band_g         FR=0.1511 FL=0.1573 RR=0.1708 RL=0.1689
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2692  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2289 train episodes / 403 val episodes
+
+--- lens: band_g ---
+  slip-good band (0.08, 0.23) x1.5: touches 1,292,185/1,928,366 braking ticks (67.0%)
+  yaw-match dz=0.015 rad/s x1.5/x0.5: 51.7% of braking ticks inside deadzone
+  lock down-weight: slip>0.5 above 5.0mph -> x0.1 on 315,463/1,928,366 braking ticks (16.4%)
+  bands=33  graded/episode mean=15.21
+  weight bins [0.10,0.28)=0.242, [0.28,0.46)=0.239, [0.46,0.64)=0.226, [0.64,0.82)=0.135, [0.82,1.00)=0.157
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02527  val_MAE(frac of car max)=[0.1749 0.1794 0.1821 0.1821]
+    epoch  2  train=0.02307  val_MAE(frac of car max)=[0.1729 0.1742 0.1776 0.1794]
+    epoch  4  train=0.02239  val_MAE(frac of car max)=[0.1651 0.1696 0.1752 0.1757]
+    epoch  6  train=0.02128  val_MAE(frac of car max)=[0.1542 0.1566 0.1738 0.1718]
+    epoch  8  train=0.02054  val_MAE(frac of car max)=[0.1513 0.153  0.1697 0.1695]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  band_g         FR=0.1513 FL=0.1530 RR=0.1697 RL=0.1695
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+exporting: ['band_g_mix_lock_s', 'band_g_mix_lock_sy']
+
+  band_g_mix_lock_s parity max|diff|=2.337e-07  PASS  -> lstmabs_weights_band_g_mix_lock_s.lua
+  band_g_mix_lock_sy parity max|diff|=1.016e-07  PASS  -> lstmabs_weights_band_g_mix_lock_sy.lua
+
+ALL PASS
+deployed 48 files -> C:\Users\Blake\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+  waiting for channel... 20s
+  waiting for channel... 30s
+  waiting for channel... 40s
+  waiting for channel... 50s
+  waiting for channel... 60s
+  waiting for channel... 70s
+  waiting for channel... 80s
+  waiting for channel... 90s
+  waiting for channel... 100s
+  waiting for channel... 110s
+  waiting for channel... 120s
+  waiting for channel... 130s
+  waiting for channel... 140s
+  waiting for channel... 150s
+  waiting for channel... 160s
+  waiting for channel... 170s
+  waiting for channel... 180s
+  waiting for channel... 190s
+  waiting for channel... 200s
+  waiting for channel... 210s
+  waiting for channel... 220s
+  waiting for channel... 230s
+  waiting for channel... 240s
+  waiting for channel... 250s
+  waiting for channel... 260s
+  waiting for channel... 270s
+  waiting for channel... 280s
+  waiting for channel... 290s
+  waiting for channel... 300s
+  waiting for channel... 310s
+  waiting for channel... 320s
+  waiting for channel... 330s
+  waiting for channel... 340s
+  waiting for channel... 350s
+  waiting for channel... 360s
+  waiting for channel... 370s
+channel up on level 'smallgrid' after ~380s
+lens tag: band_g_mix_lock_s  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_lock_s] run 1/2 @ 60mph ...  {'runID': '1788410563-0002', 'avg_g': '1.0781', 'dist_m': '33.9666', 'status': 'OK', 'gear': 'D', 'rpm': '7494', 'dmg': '0'}
+[band_g_mix_lock_s] run 2/2 @ 60mph ...  {'runID': '1788410595-0003', 'avg_g': '1.0691', 'dist_m': '34.2528', 'status': 'OK', 'gear': 'D', 'rpm': '7490', 'dmg': '0'}
+engagements: 4
+lens tag: vehicles/etk800/LSTMABS.pc  ->  MISMATCH
+  !! lens did not load, skipping
+lens tag: band_g_mix_lock_sy  ->  MISMATCH
+  !! lens did not load, skipping
+331 trace/log lines -> C:\Users\Blake\Desktop\lstm-abs\results\control_trace_slipyaw_20260902_2128.log
+RESULT ('band_g_mix_lock_s', {'runID': '1788410563-0002', 'avg_g': '1.0781', 'dist_m': '33.9666', 'status': 'OK', 'gear': 'D', 'rpm': '7494', 'dmg': '0'})
+RESULT ('band_g_mix_lock_s', {'runID': '1788410595-0003', 'avg_g': '1.0691', 'dist_m': '34.2528', 'status': 'OK', 'gear': 'D', 'rpm': '7490', 'dmg': '0'})
