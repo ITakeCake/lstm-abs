@@ -25,6 +25,10 @@ below rather than hidden.
   problem, not a footnote.
 - Results are from a small number of runs per configuration (2 to 6). They are
   consistent run to run, but they are not a statistical study.
+- Training seed matters more than most design choices: the same recipe across seeds
+  spans about 1.02 to 1.15 g. Single-seed comparisons in the tables below are
+  indicative only; the grader band-width sweep and a 5-seed ensemble both landed
+  inside that spread.
 
 ## Results, 60 mph straight-line stop, standard 2 kHz brake metric
 

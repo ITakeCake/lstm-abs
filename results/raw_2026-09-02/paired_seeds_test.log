@@ -1,0 +1,21 @@
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+lens tag: band_g_mix_b1o1_s1  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_b1o1_s1] run 1/2 @ 60mph ...Traceback (most recent call last):
+  File "C:\Users\Blake\Desktop\lstm-abs\control_test_drive.py", line 89, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\Blake\Desktop\lstm-abs\control_test_drive.py", line 70, in main
+    r = T.run_one(MPH)
+  File "C:\Users\Blake\Desktop\lstm-abs\test_lenses_drive.py", line 147, in run_one
+    line = DONE.read_text(encoding="utf-8", errors="ignore").strip()
+           ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 787, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors, newline=newline) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\pathlib\__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'C:\\Users\\Blake\\AppData\\Local\\BeamNG\\BeamNG.drive\\current\\brake_done.txt'

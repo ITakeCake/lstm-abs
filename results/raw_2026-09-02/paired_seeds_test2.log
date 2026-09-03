@@ -1,0 +1,12 @@
+attached to running game on level 'smallgrid'
+lens tag: band_g_mix_s2  ->  MISMATCH
+  !! lens did not load, skipping
+lens tag: 0.489  ->  MISMATCH
+  !! lens did not load, skipping
+lens tag: 0.499  ->  MISMATCH
+  !! lens did not load, skipping
+lens tag: 0.477  ->  MISMATCH
+  !! lens did not load, skipping
+lens tag: 0.384  ->  MISMATCH
+  !! lens did not load, skipping
+122 trace/log lines -> C:\Users\Blake\Desktop\lstm-abs\results\control_trace_pairedseeds_20260902_2021.log

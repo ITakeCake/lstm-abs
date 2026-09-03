@@ -85,10 +85,14 @@ def veh_probe(lua_expr, timeout=6.0):
 
 
 def launch_game():
-    print("launching BeamNG.drive on smallgrid ...")
     for p in (CMD, PROBE, DONE):
         if p.exists():
             p.unlink()
+    lvl = probe("getCurrentLevelIdentifier()", timeout=4)
+    if lvl and "grid" in lvl.lower():
+        print(f"attached to running game on level '{lvl}'")
+        return True
+    print("launching BeamNG.drive on smallgrid ...")
     subprocess.Popen([EXE, "-level", "smallgrid"], cwd=str(Path(EXE).parent))
     for i in range(60):
         time.sleep(10)
@@ -143,8 +147,15 @@ def run_one(mph, timeout=180):
             send('extensions.brakeTestUI.toggleAutoTestRun()', wait=False)
             return None
         time.sleep(0.5)
-    time.sleep(0.5)
-    line = DONE.read_text(encoding="utf-8", errors="ignore").strip()
+    line = ""
+    for _ in range(20):
+        time.sleep(0.5)
+        try:
+            line = DONE.read_text(encoding="utf-8", errors="ignore").strip()
+            if line:
+                break
+        except OSError:
+            pass
     return dict(p.split("=", 1) for p in line.split() if "=" in p)
 
 
