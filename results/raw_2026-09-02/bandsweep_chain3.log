@@ -1,0 +1,142 @@
+experiments/band_g_mix_b2p5o2/model.pt
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2692  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2289 train episodes / 403 val episodes
+
+--- lens: band_g ---
+  bands=65  graded/episode mean=29.78
+  weight bins [0.10,0.28)=0.231, [0.28,0.46)=0.182, [0.46,0.64)=0.243, [0.64,0.82)=0.201, [0.82,1.00)=0.143
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02807  val_MAE(frac of car max)=[0.1696 0.1753 0.179  0.1796]
+    epoch  2  train=0.02562  val_MAE(frac of car max)=[0.1668 0.1683 0.1754 0.1759]
+    epoch  4  train=0.02473  val_MAE(frac of car max)=[0.1608 0.1623 0.1734 0.174 ]
+    epoch  6  train=0.02359  val_MAE(frac of car max)=[0.1515 0.1544 0.1716 0.172 ]
+    epoch  8  train=0.02283  val_MAE(frac of car max)=[0.1476 0.1534 0.169  0.1695]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  band_g         FR=0.1476 FL=0.1534 RR=0.1690 RL=0.1695
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2692  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2289 train episodes / 403 val episodes
+
+--- lens: band_g ---
+  bands=65  graded/episode mean=28.78
+  weight bins [0.10,0.28)=0.231, [0.28,0.46)=0.182, [0.46,0.64)=0.248, [0.64,0.82)=0.200, [0.82,1.00)=0.139
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02797  val_MAE(frac of car max)=[0.1692 0.1747 0.1786 0.1786]
+    epoch  2  train=0.02553  val_MAE(frac of car max)=[0.1685 0.1702 0.1771 0.1764]
+    epoch  4  train=0.02457  val_MAE(frac of car max)=[0.159  0.161  0.1721 0.1716]
+    epoch  6  train=0.02341  val_MAE(frac of car max)=[0.1522 0.1541 0.1719 0.1721]
+    epoch  8  train=0.02272  val_MAE(frac of car max)=[0.1486 0.1518 0.1686 0.1685]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  band_g         FR=0.1486 FL=0.1518 RR=0.1686 RL=0.1685
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2692  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2289 train episodes / 403 val episodes
+
+--- lens: band_g ---
+  bands=17  graded/episode mean=7.32
+  weight bins [0.10,0.28)=0.216, [0.28,0.46)=0.178, [0.46,0.64)=0.279, [0.64,0.82)=0.170, [0.82,1.00)=0.158
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02832  val_MAE(frac of car max)=[0.1713 0.1776 0.1799 0.1808]
+    epoch  2  train=0.02576  val_MAE(frac of car max)=[0.166  0.1677 0.1774 0.1766]
+    epoch  4  train=0.02477  val_MAE(frac of car max)=[0.1595 0.163  0.1747 0.1747]
+    epoch  6  train=0.02354  val_MAE(frac of car max)=[0.1522 0.1573 0.1746 0.1741]
+    epoch  8  train=0.02277  val_MAE(frac of car max)=[0.1442 0.1526 0.1697 0.1691]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  band_g         FR=0.1442 FL=0.1526 RR=0.1697 RL=0.1691
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2692  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2289 train episodes / 403 val episodes
+
+--- lens: band_g ---
+  bands=9  graded/episode mean=3.40
+  weight bins [0.10,0.28)=0.197, [0.28,0.46)=0.166, [0.46,0.64)=0.332, [0.64,0.82)=0.157, [0.82,1.00)=0.148
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02852  val_MAE(frac of car max)=[0.1709 0.1768 0.1793 0.1783]
+    epoch  2  train=0.02590  val_MAE(frac of car max)=[0.165  0.1668 0.1752 0.1747]
+    epoch  4  train=0.02481  val_MAE(frac of car max)=[0.1553 0.16   0.1712 0.1712]
+    epoch  6  train=0.02352  val_MAE(frac of car max)=[0.1482 0.1549 0.1716 0.1724]
+    epoch  8  train=0.02282  val_MAE(frac of car max)=[0.1419 0.1522 0.1662 0.1682]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  band_g         FR=0.1419 FL=0.1522 RR=0.1662 RL=0.1682
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+exporting: ['band_g_mix_b1o1', 'band_g_mix_b2p5o2', 'band_g_mix_b5o2', 'band_g_mix_b7p5o3', 'band_g_mix_b10o1', 'band_g_mix_b20o1']
+
+  band_g_mix_b1o1 parity max|diff|=2.279e-07  PASS  -> lstmabs_weights_band_g_mix_b1o1.lua
+  band_g_mix_b2p5o2 parity max|diff|=2.556e-07  PASS  -> lstmabs_weights_band_g_mix_b2p5o2.lua
+  band_g_mix_b5o2 parity max|diff|=1.095e-07  PASS  -> lstmabs_weights_band_g_mix_b5o2.lua
+  band_g_mix_b7p5o3 parity max|diff|=1.397e-07  PASS  -> lstmabs_weights_band_g_mix_b7p5o3.lua
+  band_g_mix_b10o1 parity max|diff|=1.353e-07  PASS  -> lstmabs_weights_band_g_mix_b10o1.lua
+  band_g_mix_b20o1 parity max|diff|=1.631e-07  PASS  -> lstmabs_weights_band_g_mix_b20o1.lua
+
+ALL PASS
+deployed 41 files -> C:\Users\Blake\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+lens tag: band_g_mix_b1o1  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_b1o1] run 1/2 @ 60mph ...  {'runID': '1788403804-0001', 'avg_g': '1.0902', 'dist_m': '33.5875', 'status': 'OK', 'gear': 'D', 'rpm': '7445', 'dmg': '0'}
+[band_g_mix_b1o1] run 2/2 @ 60mph ...  {'runID': '1788403836-0002', 'avg_g': '1.1133', 'dist_m': '32.8921', 'status': 'OK', 'gear': 'D', 'rpm': '7422', 'dmg': '0'}
+engagements: 2
+lens tag: band_g_mix_b2p5o2  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_b2p5o2] run 1/2 @ 60mph ...  {'runID': '1788403874-0003', 'avg_g': '1.0823', 'dist_m': '33.8327', 'status': 'OK', 'gear': 'D', 'rpm': '7405', 'dmg': '0'}
+[band_g_mix_b2p5o2] run 2/2 @ 60mph ...  {'runID': '1788403907-0004', 'avg_g': '1.0944', 'dist_m': '33.4601', 'status': 'OK', 'gear': 'D', 'rpm': '7404', 'dmg': '0'}
+engagements: 4
+lens tag: band_g_mix_b5o2  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_b5o2] run 1/2 @ 60mph ...  {'runID': '1788403944-0005', 'avg_g': '1.0612', 'dist_m': '34.5049', 'status': 'OK', 'gear': 'D', 'rpm': '7380', 'dmg': '0'}
+[band_g_mix_b5o2] run 2/2 @ 60mph ...  {'runID': '1788403976-0006', 'avg_g': '1.0546', 'dist_m': '34.7221', 'status': 'OK', 'gear': 'D', 'rpm': '7367', 'dmg': '0'}
+engagements: 6
+lens tag: band_g_mix_b7p5o3  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_b7p5o3] run 1/2 @ 60mph ...  {'runID': '1788404012-0007', 'avg_g': '1.0480', 'dist_m': '34.9402', 'status': 'OK', 'gear': 'D', 'rpm': '7453', 'dmg': '0'}
+[band_g_mix_b7p5o3] run 2/2 @ 60mph ...  {'runID': '1788404045-0008', 'avg_g': '1.0741', 'dist_m': '34.0931', 'status': 'OK', 'gear': 'D', 'rpm': '7458', 'dmg': '0'}
+engagements: 8
+lens tag: band_g_mix_b10o1  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_b10o1] run 1/2 @ 60mph ...  {'runID': '1788404082-0009', 'avg_g': '1.0639', 'dist_m': '34.4174', 'status': 'OK', 'gear': 'D', 'rpm': '7361', 'dmg': '0'}
+[band_g_mix_b10o1] run 2/2 @ 60mph ...  {'runID': '1788404114-0010', 'avg_g': '1.0578', 'dist_m': '34.6159', 'status': 'OK', 'gear': 'D', 'rpm': '7372', 'dmg': '0'}
+engagements: 10
+lens tag: band_g_mix_b20o1  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_b20o1] run 1/2 @ 60mph ...  {'runID': '1788404151-0011', 'avg_g': '0.4061', 'dist_m': '90.1676', 'status': 'OK', 'gear': 'D', 'rpm': '7550', 'dmg': '0'}
+[band_g_mix_b20o1] run 2/2 @ 60mph ...  {'runID': '1788404187-0012', 'avg_g': '1.0401', 'dist_m': '35.2051', 'status': 'OK', 'gear': 'D', 'rpm': '7559', 'dmg': '0'}
+engagements: 12
+1461 trace/log lines -> C:\Users\Blake\Desktop\lstm-abs\results\control_trace_bandsweep_20260902_1949.log
+RESULT ('band_g_mix_b1o1', {'runID': '1788403804-0001', 'avg_g': '1.0902', 'dist_m': '33.5875', 'status': 'OK', 'gear': 'D', 'rpm': '7445', 'dmg': '0'})
+RESULT ('band_g_mix_b1o1', {'runID': '1788403836-0002', 'avg_g': '1.1133', 'dist_m': '32.8921', 'status': 'OK', 'gear': 'D', 'rpm': '7422', 'dmg': '0'})
+RESULT ('band_g_mix_b2p5o2', {'runID': '1788403874-0003', 'avg_g': '1.0823', 'dist_m': '33.8327', 'status': 'OK', 'gear': 'D', 'rpm': '7405', 'dmg': '0'})
+RESULT ('band_g_mix_b2p5o2', {'runID': '1788403907-0004', 'avg_g': '1.0944', 'dist_m': '33.4601', 'status': 'OK', 'gear': 'D', 'rpm': '7404', 'dmg': '0'})
+RESULT ('band_g_mix_b5o2', {'runID': '1788403944-0005', 'avg_g': '1.0612', 'dist_m': '34.5049', 'status': 'OK', 'gear': 'D', 'rpm': '7380', 'dmg': '0'})
+RESULT ('band_g_mix_b5o2', {'runID': '1788403976-0006', 'avg_g': '1.0546', 'dist_m': '34.7221', 'status': 'OK', 'gear': 'D', 'rpm': '7367', 'dmg': '0'})
+RESULT ('band_g_mix_b7p5o3', {'runID': '1788404012-0007', 'avg_g': '1.0480', 'dist_m': '34.9402', 'status': 'OK', 'gear': 'D', 'rpm': '7453', 'dmg': '0'})
+RESULT ('band_g_mix_b7p5o3', {'runID': '1788404045-0008', 'avg_g': '1.0741', 'dist_m': '34.0931', 'status': 'OK', 'gear': 'D', 'rpm': '7458', 'dmg': '0'})
+RESULT ('band_g_mix_b10o1', {'runID': '1788404082-0009', 'avg_g': '1.0639', 'dist_m': '34.4174', 'status': 'OK', 'gear': 'D', 'rpm': '7361', 'dmg': '0'})
+RESULT ('band_g_mix_b10o1', {'runID': '1788404114-0010', 'avg_g': '1.0578', 'dist_m': '34.6159', 'status': 'OK', 'gear': 'D', 'rpm': '7372', 'dmg': '0'})
+RESULT ('band_g_mix_b20o1', {'runID': '1788404151-0011', 'avg_g': '0.4061', 'dist_m': '90.1676', 'status': 'OK', 'gear': 'D', 'rpm': '7550', 'dmg': '0'})
+RESULT ('band_g_mix_b20o1', {'runID': '1788404187-0012', 'avg_g': '1.0401', 'dist_m': '35.2051', 'status': 'OK', 'gear': 'D', 'rpm': '7559', 'dmg': '0'})

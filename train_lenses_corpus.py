@@ -541,7 +541,7 @@ def main():
     for r in results:
         m = r["val_mae"]
         print(f"  {r['lens']:14s} FR={m[0]:.4f} FL={m[1]:.4f} RR={m[2]:.4f} RL={m[3]:.4f}")
-    print(f"\nModels -> {MODEL_DIR}")
+    print(f"\nModels -> {EXP_DIR}")
 
 
 if __name__ == "__main__":

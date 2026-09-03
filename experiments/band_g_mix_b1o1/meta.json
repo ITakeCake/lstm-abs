@@ -1,0 +1,95 @@
+{
+  "name": "band_g_mix_b1o1",
+  "lens": "band_g",
+  "trained": "2026-09-02T19:41:08",
+  "args": {
+    "rebuild_cache": false,
+    "limit_files": null,
+    "epochs": 8,
+    "seed": 0,
+    "zero_cols": "sensor_z,roll_angle,pitch_angle,gear",
+    "tag": "_mix_b1o1",
+    "lenses": "band_g",
+    "variants": "dyn_abs,stock_tel,no_abs,no_safety",
+    "exclude_variants": "",
+    "models": "etk800",
+    "roots": "recorded_data_2khz_clean,recorded_data_2khz_clean_tel",
+    "cache": "recorded_data_2khz_clean_tel/_cache_all.npz",
+    "sensor_src": "gy2",
+    "min_peak_g": 0.9,
+    "band_mph": 1.0,
+    "band_overlap": 1
+  },
+  "train_episodes": 2289,
+  "val_episodes": 403,
+  "train_seqs": 400000,
+  "val_seqs": 100000,
+  "epochs": 8,
+  "val_mae_final": [
+    0.15124,
+    0.15757,
+    0.16939,
+    0.16889
+  ],
+  "val_mae_by_epoch": [
+    [
+      0.16937,
+      0.17414,
+      0.18109,
+      0.17926
+    ],
+    [
+      0.16984,
+      0.17138,
+      0.17857,
+      0.17891
+    ],
+    [
+      0.16419,
+      0.16473,
+      0.17547,
+      0.17416
+    ],
+    [
+      0.15881,
+      0.16217,
+      0.17358,
+      0.17301
+    ],
+    [
+      0.15414,
+      0.15716,
+      0.17034,
+      0.17043
+    ],
+    [
+      0.1526,
+      0.15524,
+      0.17073,
+      0.17127
+    ],
+    [
+      0.14724,
+      0.15446,
+      0.17288,
+      0.17096
+    ],
+    [
+      0.15124,
+      0.15757,
+      0.16939,
+      0.16889
+    ]
+  ],
+  "zero_cols": [
+    "sensor_z",
+    "roll_angle",
+    "pitch_angle",
+    "gear"
+  ],
+  "sensor_src": "gy2",
+  "seq_len": 30,
+  "band_mph": 1.0,
+  "band_overlap": 1,
+  "seed": 0
+}

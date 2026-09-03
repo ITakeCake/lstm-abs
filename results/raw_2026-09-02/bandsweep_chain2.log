@@ -1,0 +1,27 @@
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2692  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2289 train episodes / 403 val episodes
+
+--- lens: band_g ---
+  bands=130  graded/episode mean=61.09
+  weight bins [0.10,0.28)=0.238, [0.28,0.46)=0.181, [0.46,0.64)=0.232, [0.64,0.82)=0.209, [0.82,1.00)=0.139
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02813  val_MAE(frac of car max)=[0.1688 0.1737 0.1796 0.1796]
+    epoch  2  train=0.02574  val_MAE(frac of car max)=[0.1676 0.1698 0.1764 0.1774]
+    epoch  4  train=0.02480  val_MAE(frac of car max)=[0.1589 0.1613 0.1722 0.1734]
+    epoch  6  train=0.02359  val_MAE(frac of car max)=[0.1548 0.154  0.1713 0.1722]
+    epoch  8  train=0.02289  val_MAE(frac of car max)=[0.1498 0.1521 0.1683 0.1679]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  band_g         FR=0.1498 FL=0.1521 RR=0.1683 RL=0.1679
+Traceback (most recent call last):
+  File "C:\Users\Blake\Desktop\lstm-abs\train_lenses_corpus.py", line 548, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\Blake\Desktop\lstm-abs\train_lenses_corpus.py", line 544, in main
+    print(f"\nModels -> {EXP_DIR}")
+                         ^^^^^^^^^
+NameError: name 'MODEL_DIR' is not defined
