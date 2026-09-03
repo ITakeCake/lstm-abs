@@ -51,7 +51,8 @@ def experiments_table():
     agg = r.groupby("experiment").agg(n=("avg_g", "size"), g=("avg_g", "mean"),
                                       dist=("dist_m", "mean"), yaw=("Achieved Yaw (deg)", "mean"))
 
-    metas = {}
+    metas = {"ens_band_g_mix5": {"description": "ensemble: 5 seeds of band_g_mix averaged at runtime in Lua"},
+             "baseline FORCE_CMD=1.0": {"description": "control run: output hardcoded to full torque, no model"}}
     for f in glob.glob(os.path.join(HERE, "experiments", "*", "meta.json")):
         m = json.load(open(f, encoding="utf-8"))
         metas[os.path.basename(os.path.dirname(f))] = m
@@ -95,7 +96,7 @@ def experiments_table():
             continue
         yaw = "" if pd.isna(row["yaw"]) else f"{row['yaw']:.1f}"
         lines.append(f"| `{name}` | {describe(name)} | {int(row['n'])} | {row['g']:.3f} | {row['dist']:.1f} | {yaw} |")
-    untested = sorted(set(metas) - set(agg.index))
+    untested = sorted(n for n in (set(metas) - set(agg.index)) if os.path.isdir(os.path.join(HERE, "experiments", n)))
     if untested:
         lines.append("")
         lines.append("Trained but not run in the car: " + ", ".join(f"`{u}`" for u in untested) + ".")

@@ -169,7 +169,7 @@ smaller than that are noise.
 | `band_g_mix_lock_s` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, seed 0 | 4 | 1.074 | 34.1 | 3.2 |
 | `band_g_mix_b1o1_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 1 | 2 | 1.070 | 34.2 | 2.1 |
 | `baseline_stock800` | corpus stock_abs+stock_full, etk800, peak>=0.9g, baseline | 3 | 1.067 | 34.3 | 2.4 |
-| `ens_band_g_mix5` | (args not recorded) | 2 | 1.064 | 34.4 | 2.2 |
+| `ens_band_g_mix5` | ensemble: 5 seeds of band_g_mix averaged at runtime in Lua | 2 | 1.064 | 34.4 | 2.2 |
 | `band_g_dyn` | telemetry dyn_abs, etk800, peak>=0.9g, band_g, bands 5mph x1 | 2 | 1.064 | 34.4 | 4.2 |
 | `band_g_mix_b7p5o3` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 7.5mph x3, seed 0 | 2 | 1.061 | 34.5 | 1.4 |
 | `band_g_mix_b10o1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 10.0mph x1, seed 0 | 2 | 1.061 | 34.5 | 2.4 |
@@ -184,7 +184,7 @@ smaller than that are noise.
 | `avg_g_window_stock` | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, avg_g_window | 2 | 1.029 | 35.6 |  |
 | `band_g_mix_b1o1_s3` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 3 | 4 | 1.023 | 35.8 | 3.2 |
 | `baseline_hg` | corpus minus abs_1f, peak>=0.9g, baseline | 2 | 1.016 | 36.0 | 3.0 |
-| `baseline FORCE_CMD=1.0` | (args not recorded) | 1 | 1.002 | 36.6 | 3.5 |
+| `baseline FORCE_CMD=1.0` | control run: output hardcoded to full torque, no model | 1 | 1.002 | 36.6 | 3.5 |
 | `baseline_stocknorpm` | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, baseline, rpm+gear zeroed | 1 | 0.987 | 37.1 | 1.0 |
 | `baseline_stock` | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, baseline | 3 | 0.894 | 41.0 | 3.6 |
 | `curation_hg` | corpus minus abs_1f, peak>=0.9g, curation | 2 | 0.887 | 41.3 |  |

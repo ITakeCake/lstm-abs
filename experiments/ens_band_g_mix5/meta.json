@@ -1,0 +1,4 @@
+{
+  "name": "ens_band_g_mix5",
+  "description": "ensemble: 5 seeds of band_g_mix averaged at runtime in Lua"
+}
