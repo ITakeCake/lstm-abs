@@ -1,0 +1,36 @@
+exporting: ['band_g_mix_s1', 'band_g_mix_s2', 'band_g_mix_s3', 'band_g_mix_s4', 'band_g_mix_s5']
+
+  band_g_mix_s1  parity max|diff|=2.142e-07  PASS  -> lstmabs_weights_band_g_mix_s1.lua
+  band_g_mix_s2  parity max|diff|=1.035e-07  PASS  -> lstmabs_weights_band_g_mix_s2.lua
+  band_g_mix_s3  parity max|diff|=9.521e-08  PASS  -> lstmabs_weights_band_g_mix_s3.lua
+  band_g_mix_s4  parity max|diff|=2.372e-07  PASS  -> lstmabs_weights_band_g_mix_s4.lua
+  band_g_mix_s5  parity max|diff|=1.711e-07  PASS  -> lstmabs_weights_band_g_mix_s5.lua
+  ensemble 'ens_band_g_mix5' -> 5 members
+
+ALL PASS
+deployed 35 files -> C:\Users\Blake\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs
+launching BeamNG.drive on smallgrid ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+lens tag: ens_band_g_mix5  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[ens_band_g_mix5] run 1/2 @ 60mph ...  {'runID': '1788400929-0001', 'avg_g': '1.0736', 'dist_m': '34.1079', 'status': 'OK', 'gear': 'D', 'rpm': '7519', 'dmg': '0'}
+[ens_band_g_mix5] run 2/2 @ 60mph ...  {'runID': '1788400962-0002', 'avg_g': '1.0538', 'dist_m': '34.7482', 'status': 'OK', 'gear': 'D', 'rpm': '7485', 'dmg': '0'}
+engagements: 2
+lens tag: band_g_mix  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix] run 1/2 @ 60mph ...  {'runID': '1788400999-0003', 'avg_g': '1.1316', 'dist_m': '32.3610', 'status': 'OK', 'gear': 'D', 'rpm': '7492', 'dmg': '0'}
+[band_g_mix] run 2/2 @ 60mph ...  {'runID': '1788401032-0004', 'avg_g': '1.1067', 'dist_m': '33.0891', 'status': 'OK', 'gear': 'D', 'rpm': '7485', 'dmg': '0'}
+engagements: 4
+lens tag: band_g_mix_s1  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[band_g_mix_s1] run 1/2 @ 60mph ...  {'runID': '1788401068-0005', 'avg_g': '1.0488', 'dist_m': '34.9145', 'status': 'OK', 'gear': 'D', 'rpm': '7501', 'dmg': '0'}
+[band_g_mix_s1] run 2/2 @ 60mph ...  {'runID': '1788401101-0006', 'avg_g': '1.0376', 'dist_m': '35.2900', 'status': 'OK', 'gear': 'D', 'rpm': '7496', 'dmg': '0'}
+engagements: 6
+663 trace/log lines -> C:\Users\Blake\Desktop\lstm-abs\results\control_trace_ensemble_20260902_1901.log
+RESULT ('ens_band_g_mix5', {'runID': '1788400929-0001', 'avg_g': '1.0736', 'dist_m': '34.1079', 'status': 'OK', 'gear': 'D', 'rpm': '7519', 'dmg': '0'})
+RESULT ('ens_band_g_mix5', {'runID': '1788400962-0002', 'avg_g': '1.0538', 'dist_m': '34.7482', 'status': 'OK', 'gear': 'D', 'rpm': '7485', 'dmg': '0'})
+RESULT ('band_g_mix', {'runID': '1788400999-0003', 'avg_g': '1.1316', 'dist_m': '32.3610', 'status': 'OK', 'gear': 'D', 'rpm': '7492', 'dmg': '0'})
+RESULT ('band_g_mix', {'runID': '1788401032-0004', 'avg_g': '1.1067', 'dist_m': '33.0891', 'status': 'OK', 'gear': 'D', 'rpm': '7485', 'dmg': '0'})
+RESULT ('band_g_mix_s1', {'runID': '1788401068-0005', 'avg_g': '1.0488', 'dist_m': '34.9145', 'status': 'OK', 'gear': 'D', 'rpm': '7501', 'dmg': '0'})
+RESULT ('band_g_mix_s1', {'runID': '1788401101-0006', 'avg_g': '1.0376', 'dist_m': '35.2900', 'status': 'OK', 'gear': 'D', 'rpm': '7496', 'dmg': '0'})
