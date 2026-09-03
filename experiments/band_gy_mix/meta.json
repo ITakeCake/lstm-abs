@@ -1,5 +1,6 @@
 {
   "name": "band_gy_mix",
   "migrated_from": "lens_models_corpus (pre-restructure, 2026-09-01/02)",
-  "note": "training args not recorded for migrated runs; see results/raw_2026-09-02 logs and docs/INVESTIGATION.md"
+  "note": "training args not recorded for migrated runs; see results/raw_2026-09-02 logs and docs/INVESTIGATION.md",
+  "description": "dyn_abs,stock_tel,no_abs,no_safety, etk800, peak>=0.9g, band_gy, bands 5mph x1, seed 0"
 }

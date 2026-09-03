@@ -1,5 +1,6 @@
 {
   "name": "baseline_stock",
   "migrated_from": "lens_models_corpus (pre-restructure, 2026-09-01/02)",
-  "note": "training args not recorded for migrated runs; see results/raw_2026-09-02 logs and docs/INVESTIGATION.md"
+  "note": "training args not recorded for migrated runs; see results/raw_2026-09-02 logs and docs/INVESTIGATION.md",
+  "description": "corpus stock_abs+stock_full, 4 cars, peak>=0.9g, baseline"
 }
