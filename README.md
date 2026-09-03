@@ -117,14 +117,21 @@ Full per-run data and every training run's validation error: `results/LSTM_ABS_R
    band against every other stop of the same car, weight ticks by rank. On a pool of
    three controllers it picks the best one per band and beats plain DynamicABS
    cloning. On a single controller it only removes data and hurts.
-6. **Tick weights that describe the action beat ones that describe the state.**
+6. **The corpus contains exactly one surface.** Episodes are labelled with 35 different
+   grip patterns and carry per-wheel `friction_static` values spanning 0.076 to 1.000,
+   but the correlation between that recorded coefficient and the deceleration actually
+   achieved is -0.21. Episodes recorded at mu 0.09 stop at 1.0 to 1.5 g. The friction
+   override was written to a ground model the tires never touched, so both the label and
+   the friction column record an intention rather than an outcome. Nothing here supports
+   training or grading a surface estimator.
+7. **Tick weights that describe the action beat ones that describe the state.**
    Up-weighting ticks whose measured yaw matched the steering command suppressed wheel
    lock (one variant completed a whole stop with peak slip 0.47 and no locked wheel).
    Up-weighting ticks sitting in the "good" 0.08-0.23 slip band did the opposite: those
    are precisely the moments when the logged controller was holding steady and changing
    torque the least (mean |change| 0.111 per tick, versus 0.127-0.134 outside the band),
    so the net learned to hold rather than modulate.
-7. **Remaining gap to the teacher:** most nets still let wheels lock below ~10 m/s,
+8. **Remaining gap to the teacher:** most nets still let wheels lock below ~10 m/s,
    where the logs contain almost no fully-locked states to learn from. Candidate next
    steps are narrower grading bands, longer context, an ensemble, or relabeling the
    logs with the teacher's own control law.
