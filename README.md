@@ -151,7 +151,9 @@ smaller than that are noise.
 |---|---|---|---|---|---|
 | **DynamicABS (reference)** | hand-written PID, not learned | 4 | **1.207** | 30.3 | 1.0 |
 | `band_g_mix_b1o1_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 2 | 2 | 1.147 | 31.9 | 2.0 |
+| `baseline_mix_epg_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 2 | 2 | 1.146 | 32.0 | 1.5 |
 | `band_g_mix_lock_sy` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 0 | 2 | 1.143 | 32.0 | 1.8 |
+| `baseline_mix_epg_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 0 | 2 | 1.142 | 32.1 | 1.0 |
 | `band_g_mix_lock_sy_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 1 | 2 | 1.138 | 32.2 | 2.9 |
 | `band_g_mix` | dyn_abs,stock_tel,no_abs,no_safety, etk800, peak>=0.9g, band_g, bands 5mph x1, seed 0 | 8 | 1.130 | 32.4 | 3.1 |
 | `band_g_mix_keep_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipkeep (0.05, 0.25), seed 0 | 2 | 1.126 | 32.5 | 3.5 |
@@ -182,7 +184,9 @@ smaller than that are noise.
 | `band_g_mix_b10o1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 10.0mph x1, seed 0 | 2 | 1.061 | 34.5 | 2.4 |
 | `band_g_mix_b5o2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x2, seed 0 | 2 | 1.058 | 34.6 | 4.1 |
 | `band_g_mix_s3` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 3 | 2 | 1.055 | 34.7 | 2.2 |
+| `baseline_mix_epg_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 1 | 2 | 1.052 | 34.8 | 2.9 |
 | `band_gy_dyn` | telemetry dyn_abs, etk800, peak>=0.9g, band_gy, bands 5mph x1 | 2 | 1.051 | 34.9 | 2.6 |
+| `band_g_mix_bandepg_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 0 | 2 | 1.048 | 34.9 | 3.0 |
 | `band_g_mix_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 1 | 2 | 1.043 | 35.1 | 2.9 |
 | `band_g_mix_keep_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipkeep (0.05, 0.25), seed 1 | 2 | 1.039 | 35.3 |  |
 | `band_g_mix_b1_y_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, yaw dz 0.015, seed 2 | 2 | 1.035 | 35.4 | 3.0 |

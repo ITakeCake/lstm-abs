@@ -53,6 +53,9 @@ SLIP_KEEP = (0.0, 0.0)  # (lo, hi) grip plateau; weight by how much of the next 
 SLIP_KEEP_WINDOW = 20   # 200Hz ticks (~100ms) of forward look
 SLIP_KEEP_GOOD = 1.5
 SLIP_KEEP_BAD = 0.4
+EPISODE_G_GAIN = 0.0    # 0 disables; weight = gain ** ((episode g - ref) / 0.1)
+EPISODE_G_REF = 1.1
+EPISODE_G_CLIP = (0.05, 8.0)
 WHEELBASE_BY_MODEL = {"etk800": 2.86, "etkc": 2.86, "sbr": 2.50, "vivace": 2.60}
 EXP_DIR = SCRIPT_DIR / "experiments"
 TAG = ""
@@ -327,6 +330,24 @@ def lock_multiplier(eps):
     return out
 
 
+def episode_g_multiplier(eps):
+    """One weight per episode from its own achieved decel; valid only because the corpus is a single surface."""
+    out, gs = [], []
+    for e in eps:
+        b = e["brake"]
+        g = float(np.percentile(e["avg_g"][b], 90)) if b.any() else 0.0
+        gs.append(g)
+        w = EPISODE_G_GAIN ** ((g - EPISODE_G_REF) / 0.1)
+        w = float(np.clip(w, *EPISODE_G_CLIP))
+        out.append(np.full(len(b), w, dtype=np.float32))
+    gs = np.array(gs)
+    ws = np.array([o[0] for o in out])
+    print(f"  episode-g weight: gain {EPISODE_G_GAIN} ref {EPISODE_G_REF}; episode g "
+          f"p10={np.percentile(gs, 10):.2f} med={np.median(gs):.2f} p90={np.percentile(gs, 90):.2f} "
+          f"-> weight p10={np.percentile(ws, 10):.2f} med={np.median(ws):.2f} p90={np.percentile(ws, 90):.2f}")
+    return out
+
+
 def slip_keep_multiplier(eps):
     """Weight the ACTION: fraction of the next window whose slip stays inside the grip plateau."""
     lo, hi = SLIP_KEEP
@@ -374,6 +395,8 @@ def yaw_match_multiplier(eps):
 
 
 def apply_lock_weight(eps, weights):
+    if EPISODE_G_GAIN > 0:
+        weights = [w * m for w, m in zip(weights, episode_g_multiplier(eps))]
     if SLIP_KEEP[1] > 0:
         mult = slip_keep_multiplier(eps)
         n_all = sum(int(e["brake"].sum()) for e in eps)
@@ -565,7 +588,8 @@ def train_lens(lens, eps, train_ids, val_ids, feat_mean, feat_std, car_max, epoc
             "band_mph": BAND_MPH, "band_overlap": BAND_OVERLAP, "seed": SEED,
             "lock_slip": LOCK_SLIP, "lock_speed_mph": LOCK_SPEED_MPH, "lock_weight": LOCK_WEIGHT,
             "slip_good": list(SLIP_GOOD), "slip_good_weight": SLIP_GOOD_WEIGHT, "yaw_dz": YAW_DZ, "yaw_good": YAW_GOOD, "yaw_bad": YAW_BAD,
-            "slip_keep": list(SLIP_KEEP), "slip_keep_window": SLIP_KEEP_WINDOW}
+            "slip_keep": list(SLIP_KEEP), "slip_keep_window": SLIP_KEEP_WINDOW,
+            "episode_g_gain": EPISODE_G_GAIN, "episode_g_ref": EPISODE_G_REF}
     (exp / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     return {"lens": lens, "val_mae": mae.tolist(), "path": str(path)}
 
@@ -580,6 +604,8 @@ def main():
     ap.add_argument("--lock-slip", type=float, default=0.0, help="down-weight ticks with any wheel slip above this (0 = off)")
     ap.add_argument("--lock-speed-mph", type=float, default=5.0, help="only above this true speed")
     ap.add_argument("--lock-weight", type=float, default=0.1, help="multiplier for those ticks")
+    ap.add_argument("--episode-g-gain", type=float, default=0.0, help="weight whole episodes by achieved g: gain ** ((g - ref)/0.1)")
+    ap.add_argument("--episode-g-ref", type=float, default=1.1)
     ap.add_argument("--slip-keep", type=str, default="", help="lo,hi grip plateau; weights ticks by how much of the next window stays inside it")
     ap.add_argument("--slip-keep-window", type=int, default=20)
     ap.add_argument("--slip-keep-good", type=float, default=1.5)
@@ -611,6 +637,8 @@ def main():
     global LOCK_SLIP, LOCK_SPEED_MPH, LOCK_WEIGHT
     LOCK_SLIP, LOCK_SPEED_MPH, LOCK_WEIGHT = args.lock_slip, args.lock_speed_mph, args.lock_weight
     global SLIP_GOOD, SLIP_GOOD_WEIGHT, YAW_DZ, YAW_GOOD, YAW_BAD
+    global EPISODE_G_GAIN, EPISODE_G_REF
+    EPISODE_G_GAIN, EPISODE_G_REF = args.episode_g_gain, args.episode_g_ref
     global SLIP_KEEP, SLIP_KEEP_WINDOW, SLIP_KEEP_GOOD, SLIP_KEEP_BAD
     if args.slip_keep:
         SLIP_KEEP = tuple(float(x) for x in args.slip_keep.split(","))
