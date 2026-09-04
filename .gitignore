@@ -9,3 +9,4 @@ recorded_data_2khz_clean_tel/
 mod/lstm_abs/lua/vehicle/controller/lstmabs_weights_*.lua
 *.BAK*
 configs/_parked*/
+recorded_data_2khz_clean_ctrl/
