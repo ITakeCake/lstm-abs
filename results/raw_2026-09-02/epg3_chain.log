@@ -1,0 +1,65 @@
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2807  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.0)
+
+split: 2386 train episodes / 421 val episodes
+
+--- lens: baseline ---
+  episode-g weight: gain 3.0 ref 1.15; episode g p10=1.04 med=1.21 p90=1.24 -> weight p10=0.31 med=1.89 p90=2.56
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02922  val_MAE(frac of car max)=[0.1788 0.1792 0.1842 0.1857]
+    epoch  2  train=0.02650  val_MAE(frac of car max)=[0.1708 0.1738 0.1831 0.1863]
+    epoch  4  train=0.02464  val_MAE(frac of car max)=[0.1628 0.1662 0.174  0.1784]
+    epoch  6  train=0.02335  val_MAE(frac of car max)=[0.1517 0.1538 0.1695 0.1732]
+    epoch  8  train=0.02279  val_MAE(frac of car max)=[0.1493 0.1537 0.1652 0.1671]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.1493 FL=0.1537 RR=0.1652 RL=0.1671
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+loading cache recorded_data_2khz_clean_tel\_cache_all.npz
+4937 episodes in memory
+episode filter: 4937 -> 2807  (variants=['dyn_abs', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.0)
+
+split: 2386 train episodes / 421 val episodes
+
+--- lens: baseline ---
+  episode-g weight: gain 3.0 ref 1.15; episode g p10=1.04 med=1.21 p90=1.24 -> weight p10=0.31 med=1.89 p90=2.56
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02915  val_MAE(frac of car max)=[0.1729 0.175  0.1818 0.1845]
+    epoch  2  train=0.02662  val_MAE(frac of car max)=[0.1687 0.1721 0.1803 0.1832]
+    epoch  4  train=0.02494  val_MAE(frac of car max)=[0.1614 0.1652 0.1756 0.1792]
+    epoch  6  train=0.02351  val_MAE(frac of car max)=[0.1591 0.1662 0.1737 0.1774]
+    epoch  8  train=0.02288  val_MAE(frac of car max)=[0.1464 0.1528 0.1645 0.1681]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.1464 FL=0.1528 RR=0.1645 RL=0.1681
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+exporting: ['baseline_all_epg3_s0', 'baseline_all_epg3_s1']
+
+  baseline_all_epg3_s0 parity max|diff|=1.278e-07  PASS  -> lstmabs_weights_baseline_all_epg3_s0.lua
+  baseline_all_epg3_s1 parity max|diff|=1.948e-07  PASS  -> lstmabs_weights_baseline_all_epg3_s1.lua
+
+ALL PASS
+deployed 69 files -> C:\Users\Blake\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs
+launching BeamNG.drive on smallgrid (attempt 1) ...
+  waiting for channel... 10s
+channel up on level 'smallgrid' after ~20s
+lens tag: baseline_all_epg3_s0  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[baseline_all_epg3_s0] run 1/2 @ 60mph ...  {'runID': '1788496288-0001', 'avg_g': '1.1522', 'dist_m': '31.7822', 'status': 'OK', 'gear': 'D', 'rpm': '7514', 'dmg': '0'}
+[baseline_all_epg3_s0] run 2/2 @ 60mph ...  {'runID': '1788496321-0002', 'avg_g': '1.0915', 'dist_m': '33.5493', 'status': 'OK', 'gear': 'D', 'rpm': '7490', 'dmg': '0'}
+engagements: 2
+lens tag: baseline_all_epg3_s1  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[baseline_all_epg3_s1] run 1/2 @ 60mph ...  {'runID': '1788496358-0003', 'avg_g': '1.0741', 'dist_m': '34.0906', 'status': 'OK', 'gear': 'D', 'rpm': '7493', 'dmg': '0'}
+[baseline_all_epg3_s1] run 2/2 @ 60mph ...  None
+engagements: None
+325 trace/log lines -> C:\Users\Blake\Desktop\lstm-abs\results\control_trace_epg3_20260903_2130.log
+RESULT ('baseline_all_epg3_s0', {'runID': '1788496288-0001', 'avg_g': '1.1522', 'dist_m': '31.7822', 'status': 'OK', 'gear': 'D', 'rpm': '7514', 'dmg': '0'})
+RESULT ('baseline_all_epg3_s0', {'runID': '1788496321-0002', 'avg_g': '1.0915', 'dist_m': '33.5493', 'status': 'OK', 'gear': 'D', 'rpm': '7490', 'dmg': '0'})
+RESULT ('baseline_all_epg3_s1', {'runID': '1788496358-0003', 'avg_g': '1.0741', 'dist_m': '34.0906', 'status': 'OK', 'gear': 'D', 'rpm': '7493', 'dmg': '0'})
+RESULT ('baseline_all_epg3_s1', None)

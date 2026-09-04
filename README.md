@@ -159,6 +159,7 @@ smaller than that are noise.
 | `band_g_mix_keep_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipkeep (0.05, 0.25), seed 0 | 2 | 1.126 | 32.5 | 3.5 |
 | `baseline_dyn` | telemetry dyn_abs, etk800, peak>=0.9g, baseline, gy2 sensors | 7 | 1.123 | 32.6 | 4.7 |
 | `band_gy_mix` | dyn_abs,stock_tel,no_abs,no_safety, etk800, peak>=0.9g, band_gy, bands 5mph x1, seed 0 | 2 | 1.122 | 32.6 | 1.0 |
+| `baseline_all_epg3_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 0 | 2 | 1.122 | 32.7 | 2.9 |
 | `band_g_mix_b1_sy_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 2 | 2 | 1.120 | 32.7 | 2.5 |
 | `band_g_mix_b1_sy_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 0 | 2 | 1.110 | 33.0 | 2.6 |
 | `band_g_mix_lock` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, seed 0 | 4 | 1.109 | 33.0 | 3.5 |
@@ -175,6 +176,7 @@ smaller than that are noise.
 | `band_g_mix_b1_sy_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 1 | 2 | 1.087 | 33.7 |  |
 | `baseline_dyn_lock` | dyn_abs, etk800, lens baseline, lock>0.5 x0.1, seed 0 | 2 | 1.079 | 33.9 | 4.4 |
 | `band_g_mix_lock_sy_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 2 | 2 | 1.074 | 34.1 |  |
+| `baseline_all_epg3_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 1 | 1 | 1.074 | 34.1 | 3.4 |
 | `band_g_mix_lock_s` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, seed 0 | 4 | 1.074 | 34.1 | 3.2 |
 | `band_g_mix_b1o1_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 1 | 2 | 1.070 | 34.2 | 2.1 |
 | `baseline_stock800` | corpus stock_abs+stock_full, etk800, peak>=0.9g, baseline | 3 | 1.067 | 34.3 | 2.4 |
