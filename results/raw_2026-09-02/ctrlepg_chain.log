@@ -1,0 +1,122 @@
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+Building cache from 5095 parquet episodes...
+  ...250/5095  kept=250
+  ...500/5095  kept=500
+  ...750/5095  kept=750
+  ...1000/5095  kept=1000
+  ...1250/5095  kept=1250
+  ...1500/5095  kept=1500
+  ...1750/5095  kept=1750
+  ...2000/5095  kept=2000
+  ...2250/5095  kept=2250
+  ...2500/5095  kept=2500
+  ...2750/5095  kept=2750
+  ...3000/5095  kept=3000
+  ...3250/5095  kept=3247
+  ...3500/5095  kept=3497
+  ...3750/5095  kept=3746
+  ...4000/5095  kept=3994
+  ...4250/5095  kept=4242
+  ...4500/5095  kept=4492
+  ...4750/5095  kept=4742
+  ...5000/5095  kept=4991
+5083 usable episodes
+per-car max torque (Nm):
+   sbr        [3000. 3000. 3000. 3000.]
+   vivace     [3000. 3000.  980.  980.]
+   etkc       [2800. 2800. 1500. 1500.]
+   etk800     [3100. 3100. 1700. 1700.]
+   pickup     [3671. 3645. 1440. 1440.]
+   sunburst2  [2700. 2700.  750.  750.]
+   scintilla  [2986. 2986. 2500. 2500.]
+   lansdale   [3200. 3200. 1013. 1013.]
+   bastion    [4300. 4300. 1388. 1388.]
+cached -> recorded_data_2khz_clean_ctrl\_cache_all3.npz
+5083 episodes in memory
+episode filter: 5083 -> 2833  (variants=['dyn_abs', 'dyn_ctrl', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2409 train episodes / 424 val episodes
+
+--- lens: baseline ---
+  episode-g weight: gain 2.0 ref 1.1; episode g p10=1.10 med=1.21 p90=1.24 -> weight p10=1.00 med=2.13 p90=2.65
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02974  val_MAE(frac of car max)=[0.1739 0.1766 0.1848 0.1831]
+    epoch  2  train=0.02682  val_MAE(frac of car max)=[0.1704 0.171  0.1841 0.1815]
+    epoch  4  train=0.02474  val_MAE(frac of car max)=[0.158  0.1592 0.1819 0.1818]
+    epoch  6  train=0.02352  val_MAE(frac of car max)=[0.1508 0.1543 0.1774 0.1764]
+    epoch  8  train=0.02308  val_MAE(frac of car max)=[0.1496 0.1536 0.1751 0.174 ]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.1496 FL=0.1536 RR=0.1751 RL=0.1740
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+zeroing channels in train+deploy: ['sensor_z', 'roll_angle', 'pitch_angle', 'gear']
+Building cache from 5095 parquet episodes...
+  ...250/5095  kept=250
+  ...500/5095  kept=500
+  ...750/5095  kept=750
+  ...1000/5095  kept=1000
+  ...1250/5095  kept=1250
+  ...1500/5095  kept=1500
+  ...1750/5095  kept=1750
+  ...2000/5095  kept=2000
+  ...2250/5095  kept=2250
+  ...2500/5095  kept=2500
+  ...2750/5095  kept=2750
+  ...3000/5095  kept=3000
+  ...3250/5095  kept=3247
+  ...3500/5095  kept=3497
+  ...3750/5095  kept=3746
+  ...4000/5095  kept=3994
+  ...4250/5095  kept=4242
+  ...4500/5095  kept=4492
+  ...4750/5095  kept=4742
+  ...5000/5095  kept=4991
+5083 usable episodes
+per-car max torque (Nm):
+   sbr        [3000. 3000. 3000. 3000.]
+   vivace     [3000. 3000.  980.  980.]
+   etkc       [2800. 2800. 1500. 1500.]
+   etk800     [3100. 3100. 1700. 1700.]
+   pickup     [3671. 3645. 1440. 1440.]
+   sunburst2  [2700. 2700.  750.  750.]
+   scintilla  [2986. 2986. 2500. 2500.]
+   lansdale   [3200. 3200. 1013. 1013.]
+   bastion    [4300. 4300. 1388. 1388.]
+cached -> recorded_data_2khz_clean_ctrl\_cache_all3.npz
+5083 episodes in memory
+episode filter: 5083 -> 2833  (variants=['dyn_abs', 'dyn_ctrl', 'no_abs', 'no_safety', 'stock_tel'] minus none, models=['etk800'], min_peak_g=0.9)
+
+split: 2409 train episodes / 424 val episodes
+
+--- lens: baseline ---
+  episode-g weight: gain 2.0 ref 1.1; episode g p10=1.10 med=1.21 p90=1.24 -> weight p10=1.00 med=2.13 p90=2.65
+  train seqs=400,000  val seqs=100,000
+    epoch  1  train=0.02980  val_MAE(frac of car max)=[0.178  0.1793 0.1884 0.1866]
+    epoch  2  train=0.02688  val_MAE(frac of car max)=[0.1689 0.1699 0.1876 0.1864]
+    epoch  4  train=0.02468  val_MAE(frac of car max)=[0.1595 0.159  0.1816 0.1802]
+    epoch  6  train=0.02360  val_MAE(frac of car max)=[0.1538 0.1566 0.1783 0.1781]
+    epoch  8  train=0.02297  val_MAE(frac of car max)=[0.1495 0.152  0.1742 0.1732]
+
+=== Summary: val MAE (fraction of car max torque, lower=closer fit) ===
+  baseline       FR=0.1495 FL=0.1520 RR=0.1742 RL=0.1732
+
+Models -> C:\Users\Blake\Desktop\lstm-abs\experiments
+exporting: ['baseline_ctrl_epg_s0', 'baseline_ctrl_epg_s2']
+
+  baseline_ctrl_epg_s0 parity max|diff|=2.030e-07  PASS  -> lstmabs_weights_baseline_ctrl_epg_s0.lua
+  baseline_ctrl_epg_s2 parity max|diff|=1.400e-07  PASS  -> lstmabs_weights_baseline_ctrl_epg_s2.lua
+
+ALL PASS
+deployed 71 files -> C:\Users\Blake\AppData\Local\BeamNG\BeamNG.drive\current\mods\Unpacked\lstm_abs
+attached to running game on level 'gridmap_v2'
+lens tag: baseline_ctrl_epg_s0  ->  OK
+partConfig: vehicles/etk800/LSTMABS.pc  hasABS: 0
+[baseline_ctrl_epg_s0] run 1/2 @ 60mph ...  None
+[baseline_ctrl_epg_s0] run 2/2 @ 60mph ...  {'runID': '1788499790-0002', 'avg_g': '1.5275', 'dist_m': '23.9737', 'status': 'DAMAGED', 'gear': 'D', 'rpm': '7500', 'dmg': '43889'}
+engagements: 3
+lens tag: None  ->  MISMATCH
+  !! lens did not load, skipping
+351 trace/log lines -> C:\Users\Blake\Desktop\lstm-abs\results\control_trace_ctrlepg_20260903_2226.log
+RESULT ('baseline_ctrl_epg_s0', None)
+RESULT ('baseline_ctrl_epg_s0', {'runID': '1788499790-0002', 'avg_g': '1.5275', 'dist_m': '23.9737', 'status': 'DAMAGED', 'gear': 'D', 'rpm': '7500', 'dmg': '43889'})

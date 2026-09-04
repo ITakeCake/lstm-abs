@@ -44,6 +44,7 @@ def experiments_table():
     gui = gui.rename(columns={"Run ID": "runID"})[["runID", "Achieved Yaw (deg)"]]
     runs = [pd.read_csv(f).assign(experiment=os.path.basename(os.path.dirname(f)))
             for f in glob.glob(os.path.join(HERE, "experiments", "*", "runs.csv"))]
+    runs = [d[d.get("status", "OK").eq("OK")] if "status" in d else d for d in runs]
     hist = pd.read_csv(os.path.join(HERE, "results", "all_runs_2026-09-02.csv"))
     hist["experiment"] = hist["config"].str.replace("LSTMABS_", "", regex=False)
     r = pd.concat(runs + [hist[["experiment", "mph", "avg_g", "dist_m", "runID"]]], ignore_index=True)

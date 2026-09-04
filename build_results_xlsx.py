@@ -33,6 +33,7 @@ def main():
     new = []
     for f in sorted(glob.glob(os.path.join(HERE, "experiments", "*", "runs.csv"))):
         d = pd.read_csv(f)
+        d = d[d["status"] == "OK"] if "status" in d else d
         d["experiment"] = os.path.basename(os.path.dirname(f))
         new.append(d[["date", "session", "experiment", "mph", "avg_g", "dist_m", "runID"]])
     runs = pd.concat([hist] + new, ignore_index=True) if new or len(hist) else pd.DataFrame()

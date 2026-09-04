@@ -214,7 +214,7 @@ smaller than that are noise.
 | `baseline_dynstock` | dyn_abs + corpus stock, etk800, baseline, IMU zeroed (invalid) | 2 | 0.224 | 163.4 | 3.0 |
 | `baseline_dynstocknoabs` | dyn_abs + stock + no-ABS, etk800, baseline, IMU zeroed (invalid) | 2 | 0.198 | 184.7 | 3.8 |
 
-Trained but not run in the car: `band_g_mix_s4`, `band_g_mix_s5`, `baseline_norpm`, `combined`.
+Trained but not run in the car: `band_g_mix_s4`, `band_g_mix_s5`, `baseline_ctrl_epg_s0`, `baseline_ctrl_epg_s2`, `baseline_norpm`, `combined`.
 
 <!-- EXPERIMENTS:END -->
 
