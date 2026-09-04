@@ -145,76 +145,83 @@ in-game stop it made). This table is generated from those folders by
 2 kHz metric. Seed-to-seed spread on an unchanged recipe is about 0.06 g, so differences
 smaller than that are noise.
 
+Every experiment name below links to its folder, which contains the trained weights
+(`model.pt`, about 220 KB), the exact training arguments and validation error
+(`meta.json`) and every in-game stop it made (`runs.csv`). To put one back in the game:
+`python export_lstm_abs.py --lens <name> --install` regenerates the Lua weight module
+from the checkpoint, or `python deploy_mod.py --lenses <name> --set-lens <name>` does
+that and copies the mod across in one step.
+
 <!-- EXPERIMENTS:START -->
 
 | experiment | training data and weighting | runs | avg g | dist (m) | yaw (deg) |
 |---|---|---|---|---|---|
 | **DynamicABS (reference)** | hand-written PID, not learned | 4 | **1.207** | 30.3 | 1.0 |
-| `band_g_mix_b1o1_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 2 | 2 | 1.147 | 31.9 | 2.0 |
-| `baseline_mix_epg_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 2 | 2 | 1.146 | 32.0 | 1.5 |
-| `band_g_mix_lock_sy` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 0 | 2 | 1.143 | 32.0 | 1.8 |
-| `baseline_mix_epg_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 0 | 2 | 1.142 | 32.1 | 1.0 |
-| `band_g_mix_lock_sy_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 1 | 2 | 1.138 | 32.2 | 2.9 |
-| `band_g_mix` | dyn_abs,stock_tel,no_abs,no_safety, etk800, peak>=0.9g, band_g, bands 5mph x1, seed 0 | 8 | 1.130 | 32.4 | 3.1 |
-| `band_g_mix_keep_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipkeep (0.05, 0.25), seed 0 | 2 | 1.126 | 32.5 | 3.5 |
-| `baseline_dyn` | telemetry dyn_abs, etk800, peak>=0.9g, baseline, gy2 sensors | 7 | 1.123 | 32.6 | 4.7 |
-| `band_gy_mix` | dyn_abs,stock_tel,no_abs,no_safety, etk800, peak>=0.9g, band_gy, bands 5mph x1, seed 0 | 2 | 1.122 | 32.6 | 1.0 |
-| `baseline_all_epg3_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 0 | 2 | 1.122 | 32.7 | 2.9 |
-| `band_g_mix_b1_sy_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 2 | 2 | 1.120 | 32.7 | 2.5 |
-| `band_g_mix_b1_sy_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 0 | 2 | 1.110 | 33.0 | 2.6 |
-| `band_g_mix_lock` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, seed 0 | 4 | 1.109 | 33.0 | 3.5 |
-| `band_g_mix_lock_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, seed 2 | 2 | 1.107 | 33.1 |  |
-| `band_g_mix_lock_y` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, yaw dz 0.015, seed 0 | 2 | 1.106 | 33.1 | 1.7 |
-| `band_g_mix_keep_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipkeep (0.05, 0.25), seed 2 | 2 | 1.105 | 33.1 | 3.7 |
-| `band_g_mix_b1_y_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, yaw dz 0.015, seed 0 | 2 | 1.102 | 33.2 | 1.5 |
-| `band_g_mix_b1o1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 0 | 2 | 1.102 | 33.2 | 1.5 |
-| `band_g_mix_b1_y_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, yaw dz 0.015, seed 1 | 2 | 1.099 | 33.3 |  |
-| `band_g_mix_lock_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, seed 1 | 2 | 1.098 | 33.3 | 3.2 |
-| `band_g_mix_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 2 | 2 | 1.092 | 33.5 | 4.9 |
-| `band_g_mix_b2p5o2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 2.5mph x2, seed 0 | 2 | 1.088 | 33.6 | 1.6 |
-| `band_g_mix_keepy_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, yaw dz 0.015, slipkeep (0.05, 0.25), seed 0 | 2 | 1.088 | 33.6 | 3.6 |
-| `band_g_mix_b1_sy_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 1 | 2 | 1.087 | 33.7 |  |
-| `baseline_dyn_lock` | dyn_abs, etk800, lens baseline, lock>0.5 x0.1, seed 0 | 2 | 1.079 | 33.9 | 4.4 |
-| `band_g_mix_lock_sy_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 2 | 2 | 1.074 | 34.1 |  |
-| `baseline_all_epg3_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 1 | 1 | 1.074 | 34.1 | 3.4 |
-| `band_g_mix_lock_s` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, seed 0 | 4 | 1.074 | 34.1 | 3.2 |
-| `band_g_mix_b1o1_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 1 | 2 | 1.070 | 34.2 | 2.1 |
-| `baseline_stock800` | corpus stock_abs+stock_full, etk800, peak>=0.9g, baseline | 3 | 1.067 | 34.3 | 2.4 |
-| `ens_band_g_mix5` | ensemble: 5 seeds of band_g_mix averaged at runtime in Lua | 2 | 1.064 | 34.4 | 2.2 |
-| `band_g_dyn` | telemetry dyn_abs, etk800, peak>=0.9g, band_g, bands 5mph x1 | 2 | 1.064 | 34.4 | 4.2 |
-| `band_g_mix_b7p5o3` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 7.5mph x3, seed 0 | 2 | 1.061 | 34.5 | 1.4 |
-| `band_g_mix_b10o1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 10.0mph x1, seed 0 | 2 | 1.061 | 34.5 | 2.4 |
-| `band_g_mix_b5o2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x2, seed 0 | 2 | 1.058 | 34.6 | 4.1 |
-| `band_g_mix_s3` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 3 | 2 | 1.055 | 34.7 | 2.2 |
-| `baseline_mix_epg_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 1 | 2 | 1.052 | 34.8 | 2.9 |
-| `band_gy_dyn` | telemetry dyn_abs, etk800, peak>=0.9g, band_gy, bands 5mph x1 | 2 | 1.051 | 34.9 | 2.6 |
-| `band_g_mix_bandepg_s0` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 0 | 2 | 1.048 | 34.9 | 3.0 |
-| `band_g_mix_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 1 | 2 | 1.043 | 35.1 | 2.9 |
-| `band_g_mix_keep_s1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipkeep (0.05, 0.25), seed 1 | 2 | 1.039 | 35.3 |  |
-| `band_g_mix_b1_y_s2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, yaw dz 0.015, seed 2 | 2 | 1.035 | 35.4 | 3.0 |
-| `avg_g_window_hg` | corpus minus abs_1f, peak>=0.9g, avg_g_window | 2 | 1.030 | 35.5 | 2.5 |
-| `curation` | S1-S5+SAC corpus, top-quartile episodes, curation | 3 | 1.029 | 35.6 | 0.8 |
-| `avg_g_window_stock` | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, avg_g_window | 2 | 1.029 | 35.6 |  |
-| `band_g_mix_b1o1_s3` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 3 | 4 | 1.023 | 35.8 | 3.2 |
-| `baseline_hg` | corpus minus abs_1f, peak>=0.9g, baseline | 2 | 1.016 | 36.0 | 3.0 |
+| [`band_g_mix_b1o1_s2`](experiments/band_g_mix_b1o1_s2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 2 | 2 | 1.147 | 31.9 | 2.0 |
+| [`baseline_mix_epg_s2`](experiments/baseline_mix_epg_s2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 2 | 2 | 1.146 | 32.0 | 1.5 |
+| [`band_g_mix_lock_sy`](experiments/band_g_mix_lock_sy/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 0 | 2 | 1.143 | 32.0 | 1.8 |
+| [`baseline_mix_epg_s0`](experiments/baseline_mix_epg_s0/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 0 | 2 | 1.142 | 32.1 | 1.0 |
+| [`band_g_mix_lock_sy_s1`](experiments/band_g_mix_lock_sy_s1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 1 | 2 | 1.138 | 32.2 | 2.9 |
+| [`band_g_mix`](experiments/band_g_mix/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, peak>=0.9g, band_g, bands 5mph x1, seed 0 | 8 | 1.130 | 32.4 | 3.1 |
+| [`band_g_mix_keep_s0`](experiments/band_g_mix_keep_s0/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipkeep (0.05, 0.25), seed 0 | 2 | 1.126 | 32.5 | 3.5 |
+| [`baseline_dyn`](experiments/baseline_dyn/) | telemetry dyn_abs, etk800, peak>=0.9g, baseline, gy2 sensors | 7 | 1.123 | 32.6 | 4.7 |
+| [`band_gy_mix`](experiments/band_gy_mix/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, peak>=0.9g, band_gy, bands 5mph x1, seed 0 | 2 | 1.122 | 32.6 | 1.0 |
+| [`baseline_all_epg3_s0`](experiments/baseline_all_epg3_s0/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 0 | 2 | 1.122 | 32.7 | 2.9 |
+| [`band_g_mix_b1_sy_s2`](experiments/band_g_mix_b1_sy_s2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 2 | 2 | 1.120 | 32.7 | 2.5 |
+| [`band_g_mix_b1_sy_s0`](experiments/band_g_mix_b1_sy_s0/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 0 | 2 | 1.110 | 33.0 | 2.6 |
+| [`band_g_mix_lock`](experiments/band_g_mix_lock/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, seed 0 | 4 | 1.109 | 33.0 | 3.5 |
+| [`band_g_mix_lock_s2`](experiments/band_g_mix_lock_s2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, seed 2 | 2 | 1.107 | 33.1 |  |
+| [`band_g_mix_lock_y`](experiments/band_g_mix_lock_y/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, yaw dz 0.015, seed 0 | 2 | 1.106 | 33.1 | 1.7 |
+| [`band_g_mix_keep_s2`](experiments/band_g_mix_keep_s2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipkeep (0.05, 0.25), seed 2 | 2 | 1.105 | 33.1 | 3.7 |
+| [`band_g_mix_b1_y_s0`](experiments/band_g_mix_b1_y_s0/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, yaw dz 0.015, seed 0 | 2 | 1.102 | 33.2 | 1.5 |
+| [`band_g_mix_b1o1`](experiments/band_g_mix_b1o1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 0 | 2 | 1.102 | 33.2 | 1.5 |
+| [`band_g_mix_b1_y_s1`](experiments/band_g_mix_b1_y_s1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, yaw dz 0.015, seed 1 | 2 | 1.099 | 33.3 |  |
+| [`band_g_mix_lock_s1`](experiments/band_g_mix_lock_s1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, seed 1 | 2 | 1.098 | 33.3 | 3.2 |
+| [`band_g_mix_s2`](experiments/band_g_mix_s2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 2 | 2 | 1.092 | 33.5 | 4.9 |
+| [`band_g_mix_b2p5o2`](experiments/band_g_mix_b2p5o2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 2.5mph x2, seed 0 | 2 | 1.088 | 33.6 | 1.6 |
+| [`band_g_mix_keepy_s0`](experiments/band_g_mix_keepy_s0/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, yaw dz 0.015, slipkeep (0.05, 0.25), seed 0 | 2 | 1.088 | 33.6 | 3.6 |
+| [`band_g_mix_b1_sy_s1`](experiments/band_g_mix_b1_sy_s1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 1 | 2 | 1.087 | 33.7 |  |
+| [`baseline_dyn_lock`](experiments/baseline_dyn_lock/) | dyn_abs, etk800, lens baseline, lock>0.5 x0.1, seed 0 | 2 | 1.079 | 33.9 | 4.4 |
+| [`band_g_mix_lock_sy_s2`](experiments/band_g_mix_lock_sy_s2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, yaw dz 0.015, seed 2 | 2 | 1.074 | 34.1 |  |
+| [`baseline_all_epg3_s1`](experiments/baseline_all_epg3_s1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 1 | 1 | 1.074 | 34.1 | 3.4 |
+| [`band_g_mix_lock_s`](experiments/band_g_mix_lock_s/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipband (0.08, 0.23) x1.5, seed 0 | 4 | 1.074 | 34.1 | 3.2 |
+| [`band_g_mix_b1o1_s1`](experiments/band_g_mix_b1o1_s1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 1 | 2 | 1.070 | 34.2 | 2.1 |
+| [`baseline_stock800`](experiments/baseline_stock800/) | corpus stock_abs+stock_full, etk800, peak>=0.9g, baseline | 3 | 1.067 | 34.3 | 2.4 |
+| [`ens_band_g_mix5`](experiments/ens_band_g_mix5/) | ensemble: 5 seeds of band_g_mix averaged at runtime in Lua | 2 | 1.064 | 34.4 | 2.2 |
+| [`band_g_dyn`](experiments/band_g_dyn/) | telemetry dyn_abs, etk800, peak>=0.9g, band_g, bands 5mph x1 | 2 | 1.064 | 34.4 | 4.2 |
+| [`band_g_mix_b7p5o3`](experiments/band_g_mix_b7p5o3/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 7.5mph x3, seed 0 | 2 | 1.061 | 34.5 | 1.4 |
+| [`band_g_mix_b10o1`](experiments/band_g_mix_b10o1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 10.0mph x1, seed 0 | 2 | 1.061 | 34.5 | 2.4 |
+| [`band_g_mix_b5o2`](experiments/band_g_mix_b5o2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x2, seed 0 | 2 | 1.058 | 34.6 | 4.1 |
+| [`band_g_mix_s3`](experiments/band_g_mix_s3/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 3 | 2 | 1.055 | 34.7 | 2.2 |
+| [`baseline_mix_epg_s1`](experiments/baseline_mix_epg_s1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, lens baseline, seed 1 | 2 | 1.052 | 34.8 | 2.9 |
+| [`band_gy_dyn`](experiments/band_gy_dyn/) | telemetry dyn_abs, etk800, peak>=0.9g, band_gy, bands 5mph x1 | 2 | 1.051 | 34.9 | 2.6 |
+| [`band_g_mix_bandepg_s0`](experiments/band_g_mix_bandepg_s0/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 0 | 2 | 1.048 | 34.9 | 3.0 |
+| [`band_g_mix_s1`](experiments/band_g_mix_s1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, seed 1 | 2 | 1.043 | 35.1 | 2.9 |
+| [`band_g_mix_keep_s1`](experiments/band_g_mix_keep_s1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 5.0mph x1, lock>0.5 x0.1, slipkeep (0.05, 0.25), seed 1 | 2 | 1.039 | 35.3 |  |
+| [`band_g_mix_b1_y_s2`](experiments/band_g_mix_b1_y_s2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, lock>0.5 x0.1, yaw dz 0.015, seed 2 | 2 | 1.035 | 35.4 | 3.0 |
+| [`avg_g_window_hg`](experiments/avg_g_window_hg/) | corpus minus abs_1f, peak>=0.9g, avg_g_window | 2 | 1.030 | 35.5 | 2.5 |
+| [`curation`](experiments/curation/) | S1-S5+SAC corpus, top-quartile episodes, curation | 3 | 1.029 | 35.6 | 0.8 |
+| [`avg_g_window_stock`](experiments/avg_g_window_stock/) | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, avg_g_window | 2 | 1.029 | 35.6 |  |
+| [`band_g_mix_b1o1_s3`](experiments/band_g_mix_b1o1_s3/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 1.0mph x1, seed 3 | 4 | 1.023 | 35.8 | 3.2 |
+| [`baseline_hg`](experiments/baseline_hg/) | corpus minus abs_1f, peak>=0.9g, baseline | 2 | 1.016 | 36.0 | 3.0 |
 | `baseline FORCE_CMD=1.0` | control run: output hardcoded to full torque, no model | 1 | 1.002 | 36.6 | 3.5 |
-| `baseline_stocknorpm` | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, baseline, rpm+gear zeroed | 1 | 0.987 | 37.1 | 1.0 |
-| `baseline_stock` | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, baseline | 3 | 0.894 | 41.0 | 3.6 |
-| `curation_hg` | corpus minus abs_1f, peak>=0.9g, curation | 2 | 0.887 | 41.3 |  |
-| `baseline_dynstocknoabs2` | dyn_abs,stock_tel,no_abs,no_safety, etk800, peak>=0.9g, baseline | 2 | 0.823 | 44.5 | 1.9 |
-| `baseline_stock16` | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, baseline, 16 epochs | 1 | 0.747 | 49.0 |  |
-| `band_g_mix_b20o1` | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 20.0mph x1, seed 0 | 2 | 0.723 | 62.7 | 2.0 |
-| `baseline` | S1-S5+SAC corpus, all 5 variants, baseline (uniform) | 3 | 0.411 | 122.8 | 2.1 |
-| `baseline_dynnoimu` | telemetry dyn_abs, etk800, peak>=0.9g, baseline, IMU zeroed | 2 | 0.367 | 99.7 | 4.6 |
-| `baseline_dynstock2` | dyn_abs + telemetry stock, etk800, peak>=0.9g, baseline | 2 | 0.249 | 147.1 | 2.8 |
-| `peak_g` | S1-S5+SAC corpus, all 5 variants, peak_g | 2 | 0.230 | 159.1 |  |
-| `avg_g_window` | S1-S5+SAC corpus, all 5 variants, avg_g_window | 3 | 0.228 | 160.4 | 3.2 |
-| `yaw_intent` | S1-S5+SAC corpus, all 5 variants, yaw_intent | 2 | 0.226 | 162.2 |  |
-| `peak_g_norpm` | S1-S5+SAC corpus, all 5 variants, peak_g, rpm+gear zeroed | 2 | 0.225 | 163.1 |  |
-| `baseline_dynstock` | dyn_abs + corpus stock, etk800, baseline, IMU zeroed (invalid) | 2 | 0.224 | 163.4 | 3.0 |
-| `baseline_dynstocknoabs` | dyn_abs + stock + no-ABS, etk800, baseline, IMU zeroed (invalid) | 2 | 0.198 | 184.7 | 3.8 |
+| [`baseline_stocknorpm`](experiments/baseline_stocknorpm/) | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, baseline, rpm+gear zeroed | 1 | 0.987 | 37.1 | 1.0 |
+| [`baseline_stock`](experiments/baseline_stock/) | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, baseline | 3 | 0.894 | 41.0 | 3.6 |
+| [`curation_hg`](experiments/curation_hg/) | corpus minus abs_1f, peak>=0.9g, curation | 2 | 0.887 | 41.3 |  |
+| [`baseline_dynstocknoabs2`](experiments/baseline_dynstocknoabs2/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, peak>=0.9g, baseline | 2 | 0.823 | 44.5 | 1.9 |
+| [`baseline_stock16`](experiments/baseline_stock16/) | corpus stock_abs+stock_full, 4 cars, peak>=0.9g, baseline, 16 epochs | 1 | 0.747 | 49.0 |  |
+| [`band_g_mix_b20o1`](experiments/band_g_mix_b20o1/) | dyn_abs,stock_tel,no_abs,no_safety, etk800, bands 20.0mph x1, seed 0 | 2 | 0.723 | 62.7 | 2.0 |
+| [`baseline`](experiments/baseline/) | S1-S5+SAC corpus, all 5 variants, baseline (uniform) | 3 | 0.411 | 122.8 | 2.1 |
+| [`baseline_dynnoimu`](experiments/baseline_dynnoimu/) | telemetry dyn_abs, etk800, peak>=0.9g, baseline, IMU zeroed | 2 | 0.367 | 99.7 | 4.6 |
+| [`baseline_dynstock2`](experiments/baseline_dynstock2/) | dyn_abs + telemetry stock, etk800, peak>=0.9g, baseline | 2 | 0.249 | 147.1 | 2.8 |
+| [`peak_g`](experiments/peak_g/) | S1-S5+SAC corpus, all 5 variants, peak_g | 2 | 0.230 | 159.1 |  |
+| [`avg_g_window`](experiments/avg_g_window/) | S1-S5+SAC corpus, all 5 variants, avg_g_window | 3 | 0.228 | 160.4 | 3.2 |
+| [`yaw_intent`](experiments/yaw_intent/) | S1-S5+SAC corpus, all 5 variants, yaw_intent | 2 | 0.226 | 162.2 |  |
+| [`peak_g_norpm`](experiments/peak_g_norpm/) | S1-S5+SAC corpus, all 5 variants, peak_g, rpm+gear zeroed | 2 | 0.225 | 163.1 |  |
+| [`baseline_dynstock`](experiments/baseline_dynstock/) | dyn_abs + corpus stock, etk800, baseline, IMU zeroed (invalid) | 2 | 0.224 | 163.4 | 3.0 |
+| [`baseline_dynstocknoabs`](experiments/baseline_dynstocknoabs/) | dyn_abs + stock + no-ABS, etk800, baseline, IMU zeroed (invalid) | 2 | 0.198 | 184.7 | 3.8 |
 
-Trained but not run in the car: `band_g_mix_s4`, `band_g_mix_s5`, `baseline_ctrl_epg_s0`, `baseline_ctrl_epg_s2`, `baseline_norpm`, `combined`.
+Trained but not yet run in the car: [`band_g_mix_s4`](experiments/band_g_mix_s4/), [`band_g_mix_s5`](experiments/band_g_mix_s5/), [`baseline_ctrl_epg_s0`](experiments/baseline_ctrl_epg_s0/), [`baseline_ctrl_epg_s2`](experiments/baseline_ctrl_epg_s2/), [`baseline_norpm`](experiments/baseline_norpm/), [`combined`](experiments/combined/).
 
 <!-- EXPERIMENTS:END -->
 

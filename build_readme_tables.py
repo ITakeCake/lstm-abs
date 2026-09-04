@@ -96,11 +96,14 @@ def experiments_table():
         if name == "DynamicABS1":
             continue
         yaw = "" if pd.isna(row["yaw"]) else f"{row['yaw']:.1f}"
-        lines.append(f"| `{name}` | {describe(name)} | {int(row['n'])} | {row['g']:.3f} | {row['dist']:.1f} | {yaw} |")
+        link = (f"[`{name}`](experiments/{name}/)" if os.path.isdir(os.path.join(HERE, "experiments", name))
+                else f"`{name}`")
+        lines.append(f"| {link} | {describe(name)} | {int(row['n'])} | {row['g']:.3f} | {row['dist']:.1f} | {yaw} |")
     untested = sorted(n for n in (set(metas) - set(agg.index)) if os.path.isdir(os.path.join(HERE, "experiments", n)))
     if untested:
         lines.append("")
-        lines.append("Trained but not run in the car: " + ", ".join(f"`{u}`" for u in untested) + ".")
+        lines.append("Trained but not yet run in the car: "
+                     + ", ".join(f"[`{u}`](experiments/{u}/)" for u in untested) + ".")
     return "\n".join(lines)
 
 
